@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual do WebRural</title>
+<style>
+  :root {
+    --ink: #23322d; --muted: #66716b; --line: #e1e7e3; --paper: #ffffff; --canvas: #f5f7f5;
+    --forest: #174b3c; --forest-dark: #12392f; --forest-soft: #e8f1ec; --copper: #b65b3b; --copper-soft: #fbefeb;
+    --aviso: #8a5a12; --aviso-soft: #fff6e6;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 16px; }
+  body { margin: 0; color: var(--ink); background: var(--canvas); font: 15px/1.65 "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; }
+  a { color: var(--forest); }
+  .layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); min-height: 100vh; }
+  nav.indice { position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 26px 18px 30px; color: #dce8e0; background: var(--forest-dark); }
+  nav.indice a.marca { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; color: #fff; font-size: 19px; font-weight: 700; text-decoration: none; }
+  .marca span.icone { display: grid; width: 34px; height: 34px; place-items: center; background: var(--copper); border-radius: 9px; font-size: 16px; }
+  .marca small { color: #a9c5b5; font-weight: 400; }
+  nav.indice p { margin: 18px 0 6px; padding: 0 8px; color: #8fae9c; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  nav.indice a { display: block; padding: 5px 8px; color: #dce8e0; border-radius: 5px; font-size: 13.5px; text-decoration: none; }
+  nav.indice a:hover, nav.indice a:focus-visible { color: #fff; background: rgba(255, 255, 255, 0.08); }
+  nav.indice a.sub { padding-left: 20px; color: #b9cfc2; font-size: 13px; }
+  main { width: min(100%, 1000px); padding: 40px 48px 80px; }
+  header.capa { margin-bottom: 36px; padding: 30px 32px; color: #fff; background: var(--forest-dark); border-bottom: 4px solid var(--copper); border-radius: 10px; }
+  header.capa p.eyebrow { margin: 0 0 6px; color: #f0ad8e; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; }
+  header.capa h1 { margin: 0 0 8px; font-size: 32px; line-height: 1.2; }
+  header.capa p { margin: 0; color: #cfe0d6; }
+  h2 { margin: 56px 0 12px; padding-top: 8px; color: var(--forest-dark); font-size: 25px; line-height: 1.25; border-top: 1px solid var(--line); }
+  h2 .num { margin-right: 8px; color: var(--copper); }
+  h3 { margin: 34px 0 8px; color: var(--forest); font-size: 19px; }
+  h4 { margin: 22px 0 6px; font-size: 15.5px; }
+  p, li { max-width: 78ch; }
+  ul, ol { padding-left: 22px; }
+  li { margin: 3px 0; }
+  figure { margin: 18px 0 24px; }
+  figure a { display: block; }
+  figure img { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 28px rgba(28, 54, 43, 0.08); }
+  .videos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 22px; margin: 18px 0 10px; }
+  .videos figure { margin: 0; }
+  .videos video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; background: var(--forest-dark); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 28px rgba(28, 54, 43, 0.08); }
+  .videos figcaption strong { display: block; color: var(--ink); font-size: 14.5px; }
+  .ver-video { display: inline-flex; align-items: center; gap: 6px; margin: 4px 0 8px; padding: 3px 10px; color: var(--forest); background: var(--forest-soft); border-radius: 999px; font-size: 13px; font-weight: 600; text-decoration: none; }
+  .ver-video:hover, .ver-video:focus-visible { background: #d9e9e0; }
+  figcaption { margin-top: 7px; color: var(--muted); font-size: 13px; }
+  .botao { display: inline-block; padding: 0 7px; color: #fff; background: var(--forest); border-radius: 4px; font-size: 12.5px; font-weight: 600; line-height: 1.7; white-space: nowrap; }
+  .botao.claro { color: var(--forest); background: #fff; border: 1px solid #c9d5cd; }
+  .caminho { padding: 1px 6px; color: var(--forest-dark); background: var(--forest-soft); border-radius: 4px; font-size: 13.5px; font-weight: 600; white-space: nowrap; }
+  kbd { padding: 0 5px; background: #fff; border: 1px solid #cfd8d2; border-bottom-width: 2px; border-radius: 4px; font: 12.5px Consolas, monospace; }
+  .nota, .atencao { margin: 16px 0; padding: 12px 16px; border-left: 4px solid; border-radius: 0 6px 6px 0; }
+  .nota { background: var(--forest-soft); border-color: var(--forest); }
+  .atencao { background: var(--aviso-soft); border-color: #c98a2b; }
+  .nota strong:first-child, .atencao strong:first-child { display: block; margin-bottom: 2px; }
+  table { width: 100%; margin: 14px 0 22px; border-collapse: collapse; background: #fff; border: 1px solid var(--line); border-radius: 6px; font-size: 14px; }
+  th, td { padding: 8px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+  th { color: #56635b; background: #f8faf8; font-size: 12.5px; font-weight: 700; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+  .passos { counter-reset: passo; list-style: none; padding-left: 0; }
+  .passos > li { position: relative; margin: 8px 0; padding-left: 38px; }
+  .passos > li::before { counter-increment: passo; content: counter(passo); position: absolute; left: 0; top: 1px; display: grid; width: 26px; height: 26px; place-items: center; color: #fff; background: var(--copper); border-radius: 50%; font-size: 13px; font-weight: 700; }
+  .rodape { margin-top: 60px; padding-top: 16px; color: var(--muted); border-top: 1px solid var(--line); font-size: 13px; }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: minmax(0, 1fr); }
+    nav.indice { position: static; height: auto; }
+    main { padding: 24px 16px 60px; }
+    td:first-child { white-space: normal; }
+  }
+  @media print {
+    body { background: #fff; font-size: 11pt; }
+    .layout { display: block; }
+    nav.indice { display: none; }
+    main { width: 100%; padding: 0; }
+    h2 { break-before: page; border: 0; }
+    figure { break-inside: avoid; }
+    #videos, .videos, .ver-video { display: none; }
+    figure img { box-shadow: none; }
+    header.capa { break-after: page; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="indice" aria-label="Índice do manual">
+  <a class="marca" href="#inicio"><span class="icone" aria-hidden="true">🌿</span>rural<small>web</small></a>
+  <p>Começando</p>
+  <a href="#videos">Vídeos de demonstração</a>
+  <a href="#acesso">1. Acesso ao sistema</a>
+  <a href="#tela">2. Conhecendo a tela</a>
+  <a href="#padroes">3. Como as telas funcionam</a>
+  <p>Cadastros</p>
+  <a href="#cadastros">4. Cadastros</a>
+  <a class="sub" href="#clientes">Clientes</a>
+  <a class="sub" href="#propriedades">Propriedades rurais</a>
+  <a class="sub" href="#plano">Plano de contas rural</a>
+  <a class="sub" href="#empresa">Empresa</a>
+  <a class="sub" href="#lista-cadastros">Os demais cadastros</a>
+  <p>Movimentação</p>
+  <a href="#caixa">5. Caixa rural</a>
+  <a href="#proprietarios">6. Lançamentos dos proprietários</a>
+  <a href="#zeramento">7. Zeramento de receitas e despesas</a>
+  <a href="#recalculo">8. Recálculo de saldos</a>
+  <a href="#gado">9. Movimento do gado</a>
+  <a href="#gado-proprietario">10. Gado por proprietário</a>
+  <p>Relatórios</p>
+  <a href="#relatorios">11. Relatórios</a>
+  <a class="sub" href="#lista-relatorios">O que cada relatório mostra</a>
+  <p>Arquivos</p>
+  <a href="#planilha">12. Importar planilha</a>
+  <a href="#nfe">13. Importar XML de NF-e</a>
+  <a href="#lcdpr">14. Gerar arquivo do LCDPR</a>
+  <p>Segurança</p>
+  <a href="#usuarios">15. Usuários</a>
+  <a href="#permissoes">16. Permissões de acesso</a>
+  <a href="#auditoria">17. Auditoria</a>
+  <p>Ajuda</p>
+  <a href="#rotina">18. Rotina sugerida</a>
+  <a href="#duvidas">19. Dúvidas frequentes</a>
+</nav>
+
+<main id="inicio">
+<header class="capa">
+  <p class="eyebrow">MANUAL DO USUÁRIO</p>
+  <h1>WebRural: livro caixa do produtor rural</h1>
+  <p>Como entrar, cadastrar, lançar, fechar o exercício, emitir relatórios e gerar os arquivos fiscais. As telas deste manual usam dados fictícios.</p>
+</header>
+
+<p>O WebRural é a nova versão do sistema Rural, agora usada pelo navegador (Chrome, Edge ou Firefox), sem instalar nada no computador. Ele faz o mesmo que o sistema anterior: controla o livro caixa de cada propriedade, divide cada lançamento entre os proprietários conforme a participação de cada um, acompanha o rebanho e gera relatórios, a apuração do resultado e o arquivo do LCDPR.</p>
+<p>Use o índice ao lado para ir direto ao assunto. Clique em qualquer imagem para vê-la no tamanho real.</p>
+
+<!-- ======================================================= -->
+<h2 id="videos">Vídeos de demonstração</h2>
+<p>Cinco vídeos curtos mostram o sistema em uso, com legendas explicando cada passo. Clique no vídeo para assistir; o botão no canto do vídeo coloca em tela cheia. Os vídeos não têm som.</p>
+<div class="videos">
+  <figure id="video-visao-geral">
+    <video controls preload="none" poster="imagens/02-inicio.png" src="videos/01-visao-geral.webm" aria-label="Vídeo: Visão geral"></video>
+    <figcaption><strong>Visão geral · 43 s</strong>Entrar no sistema e conhecer o menu.</figcaption>
+  </figure>
+  <figure id="video-cadastros">
+    <video controls preload="none" poster="imagens/10-clientes-lista.png" src="videos/02-cadastros.webm" aria-label="Vídeo: Cadastros"></video>
+    <figcaption><strong>Cadastros · 34 s</strong>Pesquisar, limpar a pesquisa e abrir o cadastro de um cliente com as abas.</figcaption>
+  </figure>
+  <figure id="video-caixa">
+    <video controls preload="none" poster="imagens/21-caixa-lancamentos.png" src="videos/03-caixa.webm" aria-label="Vídeo: Caixa rural"></video>
+    <figcaption><strong>Caixa rural · 40 s</strong>Escolher a propriedade, filtrar os lançamentos e preencher um lançamento novo.</figcaption>
+  </figure>
+  <figure id="video-relatorios">
+    <video controls preload="none" poster="imagens/32-livro-caixa.png" src="videos/04-relatorios.webm" aria-label="Vídeo: Relatórios"></video>
+    <figcaption><strong>Relatórios · 36 s</strong>Gerar o livro caixa, a DRE e os gráficos sem sair da tela.</figcaption>
+  </figure>
+  <figure id="video-gado">
+    <video controls preload="none" poster="imagens/27-gado.png" src="videos/05-gado.webm" aria-label="Vídeo: Gado"></video>
+    <figcaption><strong>Gado · 26 s</strong>Movimento do rebanho e consulta do gado por proprietário.</figcaption>
+  </figure>
+</div>
+
+<!-- ======================================================= -->
+<h2 id="acesso"><span class="num">1.</span>Acesso ao sistema</h2>
+<p>Abra o navegador e entre no endereço do WebRural informado pelo administrador. A tela de entrada pede o <strong>login</strong> e a <strong>senha</strong>.</p>
+<figure><a href="imagens/01-login.png"><img src="imagens/01-login.png" alt="Tela de entrada com os campos Login e Senha e o botão Entrar" loading="lazy" style="max-width:640px"></a>
+<figcaption>Tela de entrada. O login é digitado em letras maiúsculas automaticamente.</figcaption></figure>
+
+<h3>Primeiro acesso</h3>
+<ol class="passos">
+  <li>Digite o login recebido do administrador e deixe a senha em branco (ou use a senha provisória que ele passou).</li>
+  <li>O sistema pede que você crie a sua senha: digite a nova senha duas vezes e clique em <span class="botao">Salvar e entrar</span>.</li>
+  <li>A senha precisa ter <strong>no mínimo 8 caracteres, com letras e números</strong>, e não pode ser igual ao login.</li>
+</ol>
+
+<h3>Trocar a senha</h3>
+<p>A qualquer momento, clique no ícone da chave 🔑, no canto superior direito, ao lado do seu nome. Informe a senha atual, a nova senha e a confirmação. A senha também vence depois de alguns dias (prazo definido no cadastro da empresa); quando vencer, o sistema pede a troca ao entrar.</p>
+<figure><a href="imagens/53-trocar-senha.png"><img src="imagens/53-trocar-senha.png" alt="Janela Trocar senha com senha atual, nova senha e confirmação" loading="lazy"></a>
+<figcaption>Troca de senha pelo ícone da chave.</figcaption></figure>
+
+<div class="atencao"><strong>Bloqueio por senha errada</strong>Depois de 4 tentativas com a senha errada, o login fica bloqueado por 15 minutos. Confira se a tecla <kbd>Caps Lock</kbd> está desligada. Se esqueceu a senha, peça ao administrador para deixá-la em branco: no próximo acesso você cria uma nova.</div>
+
+<h3>Sair e inatividade</h3>
+<p>Para sair, clique no ícone de saída, o último do canto superior direito. Se o sistema ficar parado por um tempo (definido no cadastro da empresa), aparece o aviso <em>“Sessão prestes a expirar”</em>; basta mexer o mouse ou apertar uma tecla para continuar. Se nada for feito, a sessão é encerrada e é preciso entrar de novo. O que já foi salvo não se perde.</p>
+
+<!-- ======================================================= -->
+<h2 id="tela"><span class="num">2.</span>Conhecendo a tela</h2>
+<a class="ver-video" href="#video-visao-geral">▶ Ver o vídeo desta parte</a>
+<p>Depois de entrar, o sistema abre no <strong>Caixa rural</strong>. A tela tem três partes:</p>
+<figure><a href="imagens/02-inicio.png"><img src="imagens/02-inicio.png" alt="Tela principal com o menu verde à esquerda, a barra superior e o Caixa rural" loading="lazy"></a>
+<figcaption>Tela principal: menu à esquerda, barra superior e a área de trabalho.</figcaption></figure>
+<ul>
+  <li><strong>Menu lateral (verde):</strong> organizado em <em>Cadastros</em>, <em>Movimentação</em>, <em>Relatórios</em>, <em>Gerenciamento de arquivos</em> e <em>Segurança</em>. Clique em <span class="caminho">Cadastros</span> para abrir a lista de cadastros. Cada usuário vê só as opções que tem permissão de usar.</li>
+  <li><strong>Barra superior:</strong> mostra onde você está (por exemplo, <em>Movimentação / Caixa rural</em>), o indicador <em>Serviços prontos</em> (verde quando o sistema está funcionando), o botão de verificar a conexão de novo, o seu nome e nível, a troca de senha e a saída.</li>
+  <li><strong>Área de trabalho:</strong> o conteúdo da opção escolhida.</li>
+</ul>
+<figure><a href="imagens/03-menu.png"><img src="imagens/03-menu.png" alt="Menu lateral com a lista de cadastros aberta" loading="lazy" style="max-width:300px"></a>
+<figcaption>Menu lateral com os cadastros abertos.</figcaption></figure>
+<div class="nota"><strong>Se o indicador ficar vermelho</strong>“API indisponível” ou “Serviços com falha” indica que o servidor não respondeu. Clique no botão de atualizar (as duas setas) e, se continuar, avise o administrador. Nada é gravado enquanto o sistema estiver fora.</div>
+
+<!-- ======================================================= -->
+<h2 id="padroes"><span class="num">3.</span>Como as telas funcionam</h2>
+<p>As telas seguem sempre o mesmo jeito de trabalhar. Aprendendo uma, você sabe usar as outras.</p>
+
+<h3>Pesquisar</h3>
+<ul>
+  <li>Digite no campo de pesquisa e aperte <kbd>Enter</kbd> ou clique em <span class="botao claro">Pesquisar</span> / <span class="botao">Consultar</span>.</li>
+  <li><strong>Apagou o que tinha pesquisado?</strong> A pesquisa é refeita sozinha com o que ficou nos outros campos, sem precisar clicar em Consultar.</li>
+  <li>O botão <span class="botao claro">Limpar</span> esvazia todos os filtros e mostra tudo de novo.</li>
+</ul>
+<figure><a href="imagens/14-pesquisa.png"><img src="imagens/14-pesquisa.png" alt="Pesquisa de clientes filtrada por MARIA com os botões Pesquisar e Limpar" loading="lazy"></a>
+<figcaption>Pesquisa por texto, com os botões Pesquisar e Limpar.</figcaption></figure>
+
+<h3>Campos de pesquisa com lista</h3>
+<p>Campos como <em>Propriedade</em>, <em>Proprietário</em>, <em>Conta</em> ou <em>Fornecedor</em> mostram “Digite para pesquisar”. Digite parte do nome ou o código e escolha na lista que aparece. O <strong>×</strong> no fim do campo limpa a escolha.</p>
+
+<h3>Incluir, alterar e excluir</h3>
+<ul>
+  <li><span class="botao">Novo cadastro</span> / <span class="botao">Novo lançamento</span> abre uma janela em branco.</li>
+  <li>Para alterar, clique duas vezes na linha ou no lápis ✏️ da coluna <em>Ações</em>. Para excluir, use a lixeira 🗑️ (o sistema pede confirmação).</li>
+  <li>As janelas têm o cabeçalho verde com o que está sendo feito (<em>Incluir</em> ou <em>Alterar</em>) e de qual registro. Feche com o <strong>×</strong> ou com a tecla <kbd>Esc</kbd>.</li>
+  <li>Campos com <b style="color:var(--copper)">*</b> são obrigatórios.</li>
+</ul>
+
+<h3>Letras maiúsculas</h3>
+<p>Nomes, históricos, documentos e demais textos são gravados em <strong>letras maiúsculas</strong> automaticamente, como no sistema anterior. E-mail, site e senha ficam como foram digitados.</p>
+
+<h3>Botões apagados</h3>
+<p>Um botão mais claro, que não responde ao clique, está desabilitado: falta escolher algo antes (por exemplo, a propriedade) ou o seu usuário não tem permissão para aquela ação. Passe o mouse sobre ele para ver o motivo, quando houver.</p>
+
+<!-- ======================================================= -->
+<h2 id="cadastros"><span class="num">4.</span>Cadastros</h2>
+<a class="ver-video" href="#video-cadastros">▶ Ver o vídeo desta parte</a>
+<p>Abra <span class="caminho">Cadastros</span> no menu e escolha o cadastro. Todos têm a mesma tela: a pesquisa no topo, a lista com as informações mais importantes e os botões de alterar e excluir em cada linha.</p>
+<figure><a href="imagens/10-clientes-lista.png"><img src="imagens/10-clientes-lista.png" alt="Lista de clientes com apelido, nome, CPF, cidade, UF e ações" loading="lazy"></a>
+<figcaption>Pesquisa de clientes.</figcaption></figure>
+<figure><a href="imagens/19-novo-cadastro.png"><img src="imagens/19-novo-cadastro.png" alt="Janela de inclusão de fornecedor" loading="lazy"></a>
+<figcaption>Janela de inclusão (exemplo: fornecedor).</figcaption></figure>
+<div class="nota"><strong>Exclusão protegida</strong>Não é possível excluir um registro que já está sendo usado (por exemplo, uma conta com lançamentos ou um cliente vinculado a uma propriedade). O sistema avisa e sugere <strong>inativar</strong> o registro em vez de excluir.</div>
+
+<h3 id="clientes">Clientes</h3>
+<p>O cadastro do cliente (produtor rural) reúne, na mesma janela, tudo o que é dele, separado em abas:</p>
+<table>
+  <thead><tr><th>Aba</th><th>O que tem</th></tr></thead>
+  <tbody>
+    <tr><td>Dados</td><td>Cadastro geral e tributário: nome, apelido, tipo de pessoa, endereço, contatos, CPF/CNPJ, RG, início da atividade, capital social, dependentes, conferência e funcionário responsável.</td></tr>
+    <tr><td>Vínculos rurais</td><td>Em quais propriedades o cliente participa, com o <strong>percentual de participação</strong>, a inscrição de produtor, o tipo de detenção (proprietário, parceiro, arrendatário…) e a validade.</td></tr>
+    <tr><td>Capital do cliente</td><td>Histórico do capital social; o valor mais recente atualiza o campo <em>Capital social</em> do cadastro.</td></tr>
+    <tr><td>Prejuízos a compensar</td><td>Apenas consulta. Os ajustes são feitos em <span class="caminho">Cadastros › Prejuízos a compensar</span>.</td></tr>
+  </tbody>
+</table>
+<figure><a href="imagens/11-cliente-dados.png"><img src="imagens/11-cliente-dados.png" alt="Janela do cliente na aba Dados" loading="lazy"></a>
+<figcaption>Cliente, aba Dados.</figcaption></figure>
+<figure><a href="imagens/12-cliente-vinculos.png"><img src="imagens/12-cliente-vinculos.png" alt="Janela do cliente na aba Vínculos rurais, com a propriedade e o percentual" loading="lazy"></a>
+<figcaption>Cliente, aba Vínculos rurais: use <span class="botao">Incluir</span> para ligar o cliente a mais uma propriedade.</figcaption></figure>
+<div class="nota"><strong>Cliente novo</strong>As abas ficam liberadas depois que os dados do cliente são salvos. Ao incluir um cliente, a janela continua aberta para você já completar os vínculos e o capital.</div>
+<div class="atencao"><strong>Participação</strong>A soma dos percentuais dos proprietários de uma propriedade deve dar 100%. É por esse percentual que cada lançamento do caixa é dividido. Mudou a participação? Depois rode o <a href="#recalculo">Recálculo de saldos</a>.</div>
+
+<h3 id="propriedades">Propriedades rurais</h3>
+<p>Identificação da fazenda ou sítio: nome, área (ha), localização, INCRA, ITR, cidade/UF e se é propriedade de <em>destino</em> (usada nas transferências de gado). Os proprietários de cada propriedade são informados no cadastro do cliente, aba Vínculos.</p>
+<figure><a href="imagens/15-propriedades.png"><img src="imagens/15-propriedades.png" alt="Lista de propriedades rurais" loading="lazy"></a>
+<figcaption>Propriedades rurais.</figcaption></figure>
+
+<h3 id="plano">Plano de contas rural</h3>
+<p>As contas usadas nos lançamentos. Elas são organizadas em níveis pelo código (por exemplo, <code>4</code> Despesas › <code>4.01</code> Despesas de custeio › <code>4.01.06</code> Combustíveis).</p>
+<ul>
+  <li><strong>Sintética:</strong> conta de agrupamento (soma as de baixo). Não recebe lançamento.</li>
+  <li><strong>Analítica:</strong> conta que recebe lançamentos. Informe a <em>conta sintética</em> à qual ela pertence.</li>
+  <li><strong>Tipo:</strong> Ativo, Receita ou Despesa. Os valores são digitados sempre positivos; o tipo da conta define se soma ou subtrai.</li>
+  <li><strong>Adiantamento / Pagamento:</strong> para financiamentos e adiantamentos. A conta de pagamento indica a conta de adiantamento correspondente; o relatório <em>Posição dos financiamentos</em> usa essa ligação.</li>
+  <li><strong>Despesa não dedutível</strong>, <strong>receita não operacional</strong>, <strong>conta de bens</strong> e <strong>aparece no livro caixa</strong> ajustam como a conta entra na apuração e nos relatórios.</li>
+  <li>A aba <em>Vínculos de importação</em> liga a conta ao código ou descrição usados nas planilhas importadas.</li>
+</ul>
+<figure><a href="imagens/16-plano-contas.png"><img src="imagens/16-plano-contas.png" alt="Lista do plano de contas" loading="lazy"></a>
+<figcaption>Plano de contas rural.</figcaption></figure>
+<figure><a href="imagens/17-conta-editar.png"><img src="imagens/17-conta-editar.png" alt="Janela de alteração de uma conta do plano" loading="lazy"></a>
+<figcaption>Alteração de uma conta.</figcaption></figure>
+
+<h3 id="empresa">Empresa</h3>
+<p>Os dados do escritório, que saem no cabeçalho dos relatórios e no arquivo do LCDPR: razão social, CNPJ, endereço e os <strong>dados do contador</strong> (nome, CPF, CRC, e-mail e telefone). Aqui também ficam duas regras de segurança: o <strong>tempo de inatividade</strong> (em segundos) antes de encerrar a sessão e a <strong>validade da senha</strong> (em dias).</p>
+<figure><a href="imagens/18-empresa.png"><img src="imagens/18-empresa.png" alt="Janela do cadastro da empresa" loading="lazy"></a>
+<figcaption>Cadastro da empresa.</figcaption></figure>
+
+<h3 id="lista-cadastros">Os demais cadastros</h3>
+<table>
+  <thead><tr><th>Cadastro</th><th>Para que serve</th></tr></thead>
+  <tbody>
+    <tr><td>Bancos</td><td>Contas bancárias usadas nos lançamentos: número do banco, agência, conta, forma de pagamento (espécie ou outros) e tipo da conta (própria ou trânsito).</td></tr>
+    <tr><td>Tipos de animais</td><td>Categorias do rebanho (bois, vacas, novilhas…) com a espécie (bovino, suíno, equino…).</td></tr>
+    <tr><td>Detenções de imóvel</td><td>Forma de posse da propriedade (proprietário, parceiro, arrendatário, condômino) e o código usado no LCDPR.</td></tr>
+    <tr><td>Emitentes e destinatários</td><td>Quem emite ou recebe as notas do gado (cooperativas, leilões, frigoríficos).</td></tr>
+    <tr><td>Tipos de movimento</td><td>Classificação do movimento do gado (compra, venda, nascimento, transferência…).</td></tr>
+    <tr><td>Grupos de imobilizado</td><td>Grupos dos bens (máquinas, veículos, benfeitorias).</td></tr>
+    <tr><td>Departamentos</td><td>Departamentos do escritório, usados no cadastro de funcionários.</td></tr>
+    <tr><td>Fornecedores</td><td>Fornecedores informados nos lançamentos e no LCDPR, com CPF/CNPJ.</td></tr>
+    <tr><td>Funcionários</td><td>Pessoas do escritório. Todo usuário do sistema é ligado a um funcionário.</td></tr>
+    <tr><td>Prejuízos a compensar</td><td>Ajuste do prejuízo a compensar de um cliente em um ano. Sem ajuste, a apuração calcula pelos anos anteriores.</td></tr>
+    <tr><td>Tabela IRRF</td><td>Faixas do imposto de renda (valor inicial e final, alíquota, dedução e dedução por dependente), por mês e ano. Usada na apuração de resultados.</td></tr>
+    <tr><td>Tipos de importação</td><td>Layouts de planilha ou arquivo texto; na aba <em>Colunas</em>, qual coluna da planilha corresponde a cada campo do lançamento.</td></tr>
+    <tr><td>Tipos de movimento fiscal</td><td>Tipos de documento fiscal informados nos lançamentos.</td></tr>
+    <tr><td>DIPAM</td><td>Códigos DIPAM usados nas saídas de gado e no relatório de DIPAM.</td></tr>
+    <tr><td>Imobilizado</td><td>Bens por propriedade e exercício: grupo, descrição, data e valor de aquisição, venda e o lançamento do caixa correspondente.</td></tr>
+  </tbody>
+</table>
+
+<!-- ======================================================= -->
+<h2 id="caixa"><span class="num">5.</span>Caixa rural</h2>
+<a class="ver-video" href="#video-caixa">▶ Ver o vídeo desta parte</a>
+<p><span class="caminho">Movimentação › Caixa rural</span>. Aqui são feitos os lançamentos de receitas, despesas e movimentos patrimoniais de cada propriedade. Cada lançamento é dividido automaticamente entre os proprietários, pelo percentual de participação de cada um.</p>
+<ol class="passos">
+  <li>Em <strong>Propriedade</strong>, digite o nome ou o código e escolha na lista.</li>
+  <li>Em <strong>Exercício</strong>, escolha o ano. Se o ano ainda não existe, digite-o e clique em <span class="botao claro">Abrir exercício</span>.</li>
+  <li>Os lançamentos do exercício aparecem embaixo, com os totais de receitas, despesas e o saldo.</li>
+</ol>
+<figure><a href="imagens/21-caixa-lancamentos.png"><img src="imagens/21-caixa-lancamentos.png" alt="Caixa rural com a Fazenda Santa Luzia, exercício 2026 e a lista de lançamentos" loading="lazy"></a>
+<figcaption>Caixa rural com a propriedade e o exercício escolhidos.</figcaption></figure>
+
+<h3>Consultar lançamentos</h3>
+<p>Filtre por conta, período (data inicial e final) e pelo texto do histórico, documento ou número. Use <span class="botao claro">Limpar</span> para voltar a ver tudo.</p>
+
+<h3>Incluir um lançamento</h3>
+<p>Clique em <span class="botao">Novo lançamento</span>. O cabeçalho verde mostra em qual propriedade e exercício você está lançando.</p>
+<figure><a href="imagens/23-lancamento-novo.png"><img src="imagens/23-lancamento-novo.png" alt="Janela de novo lançamento" loading="lazy"></a>
+<figcaption>Novo lançamento.</figcaption></figure>
+<table>
+  <thead><tr><th>Campo</th><th>Como preencher</th></tr></thead>
+  <tbody>
+    <tr><td>Data</td><td>Data do lançamento, dentro do exercício.</td></tr>
+    <tr><td>Tipo</td><td><em>Normal</em> para o dia a dia. <em>Zeramento</em> é gerado pela tela de <a href="#zeramento">zeramento</a>.</td></tr>
+    <tr><td>Conta</td><td>Conta analítica do plano de contas.</td></tr>
+    <tr><td>Valor</td><td>Sempre positivo. Se é receita ou despesa, quem define é a conta.</td></tr>
+    <tr><td>Histórico</td><td>Descrição do lançamento (sai no livro caixa).</td></tr>
+    <tr><td>Documento, nota e série</td><td>Número do documento, da nota fiscal e a série.</td></tr>
+    <tr><td>Fornecedor e banco</td><td>Quem recebeu ou pagou e por qual conta bancária. São usados no LCDPR.</td></tr>
+    <tr><td>Forma de pagamento, tipo da conta e tipo de lançamento</td><td>Deixe <em>Conforme o banco</em> / <em>Conforme a conta</em>, a não ser que o lançamento seja diferente do padrão (por exemplo, receita de produto entregue referente a adiantamento).</td></tr>
+  </tbody>
+</table>
+<p>Ao salvar, o sistema numera o lançamento e mostra, no fim da janela, o <strong>rateio entre proprietários</strong>: quanto coube a cada um.</p>
+
+<h3>Alterar ou excluir</h3>
+<p>Clique no lançamento na lista. A janela mostra os dados e o rateio. Altere e salve, ou use <span class="botao claro">Excluir</span>.</p>
+<figure><a href="imagens/22-lancamento.png"><img src="imagens/22-lancamento.png" alt="Janela de alteração de lançamento com a propriedade no cabeçalho" loading="lazy"></a>
+<figcaption>Alteração de lançamento: o cabeçalho mostra o número, o exercício e a propriedade.</figcaption></figure>
+
+<h3>Encerrar o exercício</h3>
+<p>Terminado o ano, clique em <span class="botao claro">Encerrar</span>. Exercício encerrado não aceita lançamentos novos nem alterações. Se precisar corrigir, um usuário com permissão pode reabrir o exercício: no lugar de Encerrar aparece o botão <span class="botao claro">Reabrir</span>.</p>
+
+<!-- ======================================================= -->
+<h2 id="proprietarios"><span class="num">6.</span>Lançamentos dos proprietários</h2>
+<p><span class="caminho">Movimentação › Lançamentos dos proprietários</span>. Mostra a <strong>parcela de um proprietário</strong> em cada lançamento, de todas as propriedades em que ele participa, com os totais de receitas, despesas e saldo.</p>
+<p>Escolha o proprietário. Se quiser, filtre por propriedade, exercício, período, documento, série ou valor da parcela. O botão <span class="botao claro">Limpar</span> tira os filtros e mantém o proprietário escolhido.</p>
+<figure><a href="imagens/24-lancamentos-proprietario.png"><img src="imagens/24-lancamentos-proprietario.png" alt="Lançamentos do proprietário Carlos com a participação e a parcela" loading="lazy"></a>
+<figcaption>Parcela do proprietário em cada lançamento.</figcaption></figure>
+
+<!-- ======================================================= -->
+<h2 id="zeramento"><span class="num">7.</span>Zeramento de receitas e despesas</h2>
+<p><span class="caminho">Movimentação › Zeramento de receitas e despesas</span>. No fim do exercício, lança o <strong>inverso do saldo</strong> de cada conta de receita e de despesa, para que o saldo de cada proprietário nessas contas fique zerado.</p>
+<ol class="passos">
+  <li>Escolha a propriedade, o exercício e a data final.</li>
+  <li>Confira na lista as contas com saldo e o valor que será lançado.</li>
+  <li>Clique em <span class="botao">Gerar zeramento</span>.</li>
+</ol>
+<figure><a href="imagens/25-zeramento.png"><img src="imagens/25-zeramento.png" alt="Tela de zeramento com as contas a zerar e os botões Excluir zeramentos e Gerar zeramento" loading="lazy"></a>
+<figcaption>Contas a zerar na Fazenda Santa Luzia, exercício 2026.</figcaption></figure>
+<div class="atencao"><strong>Gere uma vez só</strong>Para refazer, primeiro use <span class="botao claro">Excluir zeramentos</span> e depois gere de novo. Gerar duas vezes duplica os valores. Os relatórios têm a opção <em>Desconsiderar zeramento</em> para ver os valores sem ele.</div>
+
+<!-- ======================================================= -->
+<h2 id="recalculo"><span class="num">8.</span>Recálculo de saldos</h2>
+<p><span class="caminho">Movimentação › Recálculo de saldos</span>. Refaz a divisão (rateio) dos lançamentos <strong>dos exercícios abertos</strong> a partir de uma data. Use quando a participação dos proprietários mudar ou entrar ou sair um sócio.</p>
+<ul>
+  <li><strong>Manter os atuais:</strong> usa os percentuais que estão hoje nos vínculos dos clientes.</li>
+  <li><strong>Partes iguais entre os sócios ativos:</strong> divide igualmente entre os sócios ativos.</li>
+</ul>
+<p>A tela mostra os sócios, o percentual atual, como fica depois do recálculo e quantos lançamentos serão refeitos. Confira e clique em <span class="botao">Recalcular</span>.</p>
+<figure><a href="imagens/26-recalculo.png"><img src="imagens/26-recalculo.png" alt="Recálculo de saldos com os sócios e os percentuais" loading="lazy"></a>
+<figcaption>Recálculo da Fazenda Boa Esperança a partir de 01/01/2026.</figcaption></figure>
+
+<!-- ======================================================= -->
+<h2 id="gado"><span class="num">9.</span>Movimento do gado</h2>
+<a class="ver-video" href="#video-gado">▶ Ver o vídeo desta parte</a>
+<p><span class="caminho">Movimentação › Movimento do gado</span>. Registra entradas, nascimentos, saídas, abates e perdas do rebanho de cada propriedade, por tipo de animal. Filtre por propriedade, animal, período, situação (entrada ou saída) ou documento.</p>
+<figure><a href="imagens/27-gado.png"><img src="imagens/27-gado.png" alt="Lista de movimentos do gado" loading="lazy"></a>
+<figcaption>Movimentos do gado.</figcaption></figure>
+<p>No movimento, o quadro segue o modelo da ficha do rebanho: o <strong>saldo anterior</strong> vem do último movimento, e o sistema calcula a soma das entradas, das saídas e o <strong>saldo</strong>. Informe também o tipo de movimento, o valor, a nota e o emitente e, nas saídas, o código DIPAM. Em transferências, escolha a propriedade de destino.</p>
+<figure><a href="imagens/28-gado-movimento.png"><img src="imagens/28-gado-movimento.png" alt="Janela do movimento do gado com entradas, saídas e saldo" loading="lazy"></a>
+<figcaption>Movimento de venda de 40 bois: saldo de 120 para 80.</figcaption></figure>
+
+<!-- ======================================================= -->
+<h2 id="gado-proprietario"><span class="num">10.</span>Gado por proprietário</h2>
+<p><span class="caminho">Movimentação › Gado por proprietário</span>. Movimento do rebanho de cada proprietário por espécie e período. Filtre por proprietário, espécie e exercício e use <span class="botao">Novo movimento</span> para incluir um período.</p>
+<figure><a href="imagens/29-gado-proprietario.png"><img src="imagens/29-gado-proprietario.png" alt="Gado por proprietário" loading="lazy"></a>
+<figcaption>Gado por proprietário.</figcaption></figure>
+
+<!-- ======================================================= -->
+<h2 id="relatorios"><span class="num">11.</span>Relatórios</h2>
+<a class="ver-video" href="#video-relatorios">▶ Ver o vídeo desta parte</a>
+<p><span class="caminho">Relatórios</span>. Todos os relatórios ficam numa tela só, separados por grupo (Caixa, Cadastros, Rebanho e Análise).</p>
+<ol class="passos">
+  <li>Clique no relatório na lista à esquerda.</li>
+  <li>Preencha os filtros. Em muitos relatórios a <strong>Abrangência</strong> define se é de uma propriedade, de um proprietário ou de todas as propriedades.</li>
+  <li>Clique em <span class="botao">Gerar relatório</span>. Ele aparece logo abaixo.</li>
+  <li>Use <span class="botao claro">Imprimir / PDF</span> para imprimir ou salvar em PDF (no navegador, escolha a impressora <em>Salvar como PDF</em>) e <span class="botao claro">Exportar Excel</span> para abrir no Excel.</li>
+</ol>
+<figure><a href="imagens/31-relatorio-filtros.png"><img src="imagens/31-relatorio-filtros.png" alt="Relatório Livro caixa com os filtros de abrangência, propriedade, datas e conta" loading="lazy"></a>
+<figcaption>Filtros do Livro caixa.</figcaption></figure>
+<figure><a href="imagens/32-livro-caixa.png"><img src="imagens/32-livro-caixa.png" alt="Livro caixa gerado com saldo anterior, receitas, despesas e saldo" loading="lazy"></a>
+<figcaption>Livro caixa gerado.</figcaption></figure>
+<div class="nota"><strong>Trocar de relatório</strong>A lista de relatórios continua visível depois de gerar. Para ganhar espaço em relatórios largos, clique em <span class="botao claro">Recolher lista</span>; o mesmo botão (<em>Lista de relatórios</em>) mostra a lista de novo. O campo <em>Trocar relatório</em>, à direita, também muda o relatório.</div>
+
+<h3 id="lista-relatorios">O que cada relatório mostra</h3>
+<table>
+  <thead><tr><th>Relatório</th><th>O que mostra</th></tr></thead>
+  <tbody>
+    <tr><td>Livro caixa</td><td>Receitas e despesas das contas do livro caixa, com saldo anterior e saldo acumulado.</td></tr>
+    <tr><td>Razão analítico</td><td>Movimento por conta (ou por conta sintética e suas analíticas) com saldo acumulado. “Todas as propriedades” corresponde ao razão analítico geral.</td></tr>
+    <tr><td>Saldo anual</td><td>Receitas, despesas, adiantamentos e pagamentos mês a mês no exercício.</td></tr>
+    <tr><td>Saldo do proprietário</td><td>Valores por conta no período: receitas, despesas, adiantamentos, pagamentos e deduções.</td></tr>
+    <tr><td>Termo de abertura e encerramento</td><td>Termos do livro caixa do produtor rural, com o número do livro e a quantidade de páginas.</td></tr>
+    <tr><td>Apuração de resultados</td><td>Resultado da atividade rural no exercício, compensação de prejuízos, opção pelos 20% da receita bruta e imposto estimado (usa a Tabela IRRF).</td></tr>
+    <tr><td>Posição dos financiamentos</td><td>Saldo anterior, valores adiantados, pagos e saldo de cada conta de financiamento do proprietário.</td></tr>
+    <tr><td>Propriedades x proprietários</td><td>Participação de cada proprietário nas propriedades.</td></tr>
+    <tr><td>Imobilizado</td><td>Bens por propriedade e grupo, com aquisição e venda.</td></tr>
+    <tr><td>DIPAM</td><td>Saídas de gado com DIPAM, agrupadas por código.</td></tr>
+    <tr><td>Estoque do gado por proprietário</td><td>Quadro consolidado do rebanho do proprietário por espécie.</td></tr>
+    <tr><td>Demonstrativo do movimento do gado</td><td>Resumo por animal ou lista das entradas e saídas da propriedade.</td></tr>
+    <tr><td>DRE</td><td>Demonstrativo de resultado: valores mês a mês por conta do plano (as sintéticas somam as analíticas), com receitas, despesas, saldo e gráfico mensal.</td></tr>
+    <tr><td>Gráficos do livro caixa</td><td>Total por conta de receitas, despesas ou ativos no período, em barras ou pizza.</td></tr>
+  </tbody>
+</table>
+<figure><a href="imagens/35-apuracao.png"><img src="imagens/35-apuracao.png" alt="Apuração de resultados do proprietário com o resultado e o imposto estimado" loading="lazy"></a>
+<figcaption>Apuração de resultados de um proprietário.</figcaption></figure>
+<figure><a href="imagens/33-dre.png"><img src="imagens/33-dre.png" alt="DRE com gráfico de receitas e despesas por mês" loading="lazy"></a>
+<figcaption>DRE com o gráfico mensal.</figcaption></figure>
+<figure><a href="imagens/34-graficos.png"><img src="imagens/34-graficos.png" alt="Gráfico de despesas por conta em barras horizontais" loading="lazy"></a>
+<figcaption>Gráficos do livro caixa: despesas por conta.</figcaption></figure>
+
+<!-- ======================================================= -->
+<h2 id="planilha"><span class="num">12.</span>Importar planilha</h2>
+<p><span class="caminho">Gerenciamento de arquivos › Importar planilha</span>. Lança de uma vez os movimentos de uma planilha (extrato, controle do produtor etc.).</p>
+<ol class="passos">
+  <li>Escolha a propriedade, o <strong>layout de importação</strong> (cadastrado em <em>Tipos de importação</em>) e o arquivo (.xlsx, .xls ou .csv).</li>
+  <li>Clique em <span class="botao">Analisar planilha</span>. O sistema mostra as linhas para conferência.</li>
+  <li>Escolha a conta das linhas que não foram reconhecidas. Você pode marcar várias linhas e aplicar o mesmo banco ou tipo de documento fiscal de uma vez, e pedir para <em>lembrar as contas escolhidas</em> nas próximas importações.</li>
+  <li>Clique em <span class="botao">Gerar lançamentos</span>. Nada é gravado antes deste passo.</li>
+</ol>
+<figure><a href="imagens/40-importar-planilha.png"><img src="imagens/40-importar-planilha.png" alt="Tela de importação de planilha" loading="lazy"></a>
+<figcaption>Importar planilha.</figcaption></figure>
+
+<!-- ======================================================= -->
+<h2 id="nfe"><span class="num">13.</span>Importar XML de NF-e</h2>
+<p><span class="caminho">Gerenciamento de arquivos › Importar XML de NF-e</span>. Gera os lançamentos a partir dos arquivos XML das notas fiscais eletrônicas.</p>
+<ul>
+  <li>Escolha um ou vários XML. A propriedade é identificada pelo destinatário da nota.</li>
+  <li>Escolha se gera <strong>um lançamento por duplicata</strong> (na data de vencimento) ou <strong>um na emissão</strong>.</li>
+  <li>Informe a conta de cada lançamento e clique em <span class="botao">Gerar lançamentos</span>.</li>
+  <li>Notas que já foram lançadas são avisadas, para não lançar em dobro.</li>
+</ul>
+<figure><a href="imagens/41-importar-nfe.png"><img src="imagens/41-importar-nfe.png" alt="Tela de importação de XML de NF-e" loading="lazy"></a>
+<figcaption>Importar XML de NF-e.</figcaption></figure>
+
+<!-- ======================================================= -->
+<h2 id="lcdpr"><span class="num">14.</span>Gerar arquivo do LCDPR</h2>
+<p><span class="caminho">Gerenciamento de arquivos › Gerar arquivo do LCDPR</span>. Gera o arquivo do <strong>Livro Caixa Digital do Produtor Rural</strong> para o programa da Receita Federal, com os lançamentos na parcela do proprietário.</p>
+<ol class="passos">
+  <li>Escolha o proprietário e o período (normalmente o ano inteiro).</li>
+  <li>Informe o início do período, a situação especial (se houver) e a forma de apuração (livro caixa ou lucro presumido).</li>
+  <li>Clique em <span class="botao">Gerar prévia</span>. Confira os totais, as contas bancárias e a lista <em>Corrija antes de entregar</em>, se aparecer.</li>
+  <li>Clique em <span class="botao claro">Baixar arquivo</span> e importe-o no programa do LCDPR.</li>
+</ol>
+<figure><a href="imagens/42-lcdpr.png"><img src="imagens/42-lcdpr.png" alt="Tela de parâmetros do LCDPR" loading="lazy"></a>
+<figcaption>Parâmetros do LCDPR.</figcaption></figure>
+<div class="nota"><strong>Antes de gerar</strong>Confira os dados do contador no cadastro da empresa, o CPF e a inscrição do produtor no cliente, o fornecedor e o banco dos lançamentos. São informações exigidas no arquivo.</div>
+
+<!-- ======================================================= -->
+<h2 id="usuarios"><span class="num">15.</span>Usuários</h2>
+<p><span class="caminho">Segurança › Usuários</span> (somente administradores). Cadastra quem acessa o sistema: o funcionário, o login, o nível (<em>Administrador</em> ou <em>Usuário</em>) e se está ativo.</p>
+<ul>
+  <li>Para liberar um usuário novo, deixe a senha em branco: ele cria a própria senha no primeiro acesso.</li>
+  <li>Se alguém esquecer a senha ou ficar bloqueado, abra o usuário e clique em <span class="botao claro">Inicializar senha</span>: a senha fica em branco, o bloqueio é retirado e a pessoa cria uma nova ao entrar.</li>
+  <li>Para tirar o acesso de quem saiu, marque <em>Ativo = Não</em>. O histórico na auditoria é mantido.</li>
+</ul>
+<figure><a href="imagens/50-usuarios.png"><img src="imagens/50-usuarios.png" alt="Lista de usuários" loading="lazy"></a>
+<figcaption>Usuários.</figcaption></figure>
+
+<!-- ======================================================= -->
+<h2 id="permissoes"><span class="num">16.</span>Permissões de acesso</h2>
+<p><span class="caminho">Segurança › Permissões de acesso</span> (somente administradores). Administradores acessam tudo. Para o nível <em>Usuário</em>, escolha o usuário e marque, em cada tela:</p>
+<ul>
+  <li><strong>Acesso:</strong> a tela aparece no menu e o usuário pode pesquisar e consultar.</li>
+  <li><strong>Incluir</strong>, <strong>Alterar</strong> e <strong>Excluir:</strong> o que ele pode fazer além de consultar. O traço (–) indica uma ação que aquela tela não tem.</li>
+</ul>
+<p>Clique em <span class="botao">Salvar permissões</span>. O usuário vê o menu atualizado quando entrar de novo ou recarregar a página.</p>
+<figure><a href="imagens/51-permissoes.png"><img src="imagens/51-permissoes.png" alt="Permissões do usuário ANA.PAULA por aplicação" loading="lazy"></a>
+<figcaption>Permissões de um usuário.</figcaption></figure>
+
+<!-- ======================================================= -->
+<h2 id="auditoria"><span class="num">17.</span>Auditoria</h2>
+<p><span class="caminho">Segurança › Auditoria</span>. Mostra quem fez o quê, quando e de onde. Tem três abas:</p>
+<ul>
+  <li><strong>Alterações de dados:</strong> cada inclusão, alteração e exclusão em cadastros e movimentos, com o usuário, a data e hora, a origem, o registro e <strong>o que mudou</strong> (o valor antigo riscado e o novo ao lado). Em <em>Ver dados</em>, o registro completo.</li>
+  <li><strong>Entradas no sistema:</strong> os acessos e as tentativas negadas (senha errada, usuário bloqueado ou inativo).</li>
+  <li><strong>Sistema anterior:</strong> o histórico de alterações gravado pelo sistema Rural antigo.</li>
+</ul>
+<p>Filtre por período, cadastro ou movimento, operação, login e código do registro.</p>
+<figure><a href="imagens/52-auditoria.png"><img src="imagens/52-auditoria.png" alt="Auditoria com a lista de alterações" loading="lazy"></a>
+<figcaption>Auditoria: alterações de dados.</figcaption></figure>
+
+<!-- ======================================================= -->
+<h2 id="rotina"><span class="num">18.</span>Rotina sugerida</h2>
+<h4>Ao receber um cliente novo</h4>
+<ol>
+  <li>Cadastre a propriedade em <em>Propriedades rurais</em>.</li>
+  <li>Cadastre o cliente e, na aba <em>Vínculos rurais</em>, ligue-o à propriedade com o percentual (a soma dos proprietários deve dar 100%).</li>
+  <li>No <em>Caixa rural</em>, abra o exercício da propriedade.</li>
+</ol>
+<h4>No dia a dia</h4>
+<ol>
+  <li>Lance as receitas e despesas no <em>Caixa rural</em> ou importe planilhas e XML de notas.</li>
+  <li>Registre o movimento do gado.</li>
+  <li>Acompanhe pelo <em>Livro caixa</em> e por <em>Lançamentos dos proprietários</em>.</li>
+</ol>
+<h4>No fechamento do ano</h4>
+<ol>
+  <li>Confira o <em>Livro caixa</em> e a <em>Apuração de resultados</em> de cada proprietário.</li>
+  <li>Gere o arquivo do <em>LCDPR</em> e emita os <em>Termos de abertura e encerramento</em>.</li>
+  <li>Faça o <em>Zeramento de receitas e despesas</em> e <strong>encerre o exercício</strong> no Caixa rural.</li>
+</ol>
+
+<!-- ======================================================= -->
+<h2 id="duvidas"><span class="num">19.</span>Dúvidas frequentes</h2>
+<h4>Não consigo entrar.</h4>
+<p>Confira o <kbd>Caps Lock</kbd>. Depois de 4 senhas erradas o login fica bloqueado por 15 minutos. Se esqueceu a senha, peça ao administrador para inicializá-la.</p>
+<h4>Uma opção do menu não aparece ou um botão está apagado.</h4>
+<p>O seu usuário não tem permissão para ela. Peça ao administrador para liberar em <em>Permissões de acesso</em>.</p>
+<h4>Não consigo lançar ou alterar um lançamento.</h4>
+<p>O exercício pode estar encerrado (aparece “Encerrado” ao lado do exercício) ou o exercício do ano ainda não foi aberto.</p>
+<h4>O valor de um proprietário está errado.</h4>
+<p>Confira o percentual dele no cliente, aba <em>Vínculos rurais</em>. Se a participação mudou, rode o <em>Recálculo de saldos</em> a partir da data da mudança.</p>
+<h4>Não consigo excluir um cadastro.</h4>
+<p>Ele já está sendo usado. Em vez de excluir, inative-o (campo <em>Ativo</em>).</p>
+<h4>Como salvo um relatório em PDF?</h4>
+<p>Gere o relatório, clique em <span class="botao claro">Imprimir / PDF</span> e, na janela de impressão, escolha <em>Salvar como PDF</em>. Só o relatório é impresso, sem o menu e os filtros.</p>
+
+<p class="rodape">Manual do WebRural. As telas mostram um banco de demonstração com dados fictícios (pessoas, propriedades, documentos e valores inventados). Em caso de dúvida, fale com o administrador do sistema.</p>
+</main>
+</div>
+</body>
+</html>
