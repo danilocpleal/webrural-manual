@@ -78,6 +78,9 @@
     figure img { box-shadow: none; }
     header.capa { break-after: page; }
   }
+  details.fornecedor { margin: 20px 0; padding: 12px 16px; background: var(--forest-soft); border: 1px solid var(--line, #dfe7e2); border-radius: 6px; }
+  details.fornecedor summary { cursor: pointer; font-weight: 700; color: var(--forest); }
+  details.fornecedor[open] summary { margin-bottom: 10px; }
 </style>
 </head>
 <body>
@@ -87,6 +90,7 @@
   <p>Começando</p>
   <a href="#videos">Vídeos de demonstração</a>
   <a href="#acesso">1. Acesso ao sistema</a>
+  <a class="sub" href="#empresas">Escolher e trocar a empresa</a>
   <a href="#tela">2. Conhecendo a tela</a>
   <a href="#padroes">3. Como as telas funcionam</a>
   <p>Cadastros</p>
@@ -114,9 +118,10 @@
   <a href="#usuarios">15. Usuários</a>
   <a href="#permissoes">16. Permissões de acesso</a>
   <a href="#auditoria">17. Auditoria</a>
+  <a href="#licenca">18. Licença de uso</a>
   <p>Ajuda</p>
-  <a href="#rotina">18. Rotina sugerida</a>
-  <a href="#duvidas">19. Dúvidas frequentes</a>
+  <a href="#rotina">19. Rotina sugerida</a>
+  <a href="#duvidas">20. Dúvidas frequentes</a>
 </nav>
 
 <main id="inicio">
@@ -131,11 +136,11 @@
 
 <!-- ======================================================= -->
 <h2 id="videos">Vídeos de demonstração</h2>
-<p>Cinco vídeos curtos mostram o sistema em uso, com legendas explicando cada passo. Clique no vídeo para assistir; o botão no canto do vídeo coloca em tela cheia. Os vídeos não têm som.</p>
+<p>Sete vídeos curtos mostram o sistema em uso, com legendas explicando cada passo. Clique no vídeo para assistir; o botão no canto do vídeo coloca em tela cheia. Os vídeos não têm som.</p>
 <div class="videos">
   <figure id="video-visao-geral">
     <video controls preload="none" poster="imagens/02-inicio.png" src="videos/01-visao-geral.webm" aria-label="Vídeo: Visão geral"></video>
-    <figcaption><strong>Visão geral · 43 s</strong>Entrar no sistema e conhecer o menu.</figcaption>
+    <figcaption><strong>Visão geral · 49 s</strong>Entrar no sistema (com a empresa já marcada) e conhecer o menu.</figcaption>
   </figure>
   <figure id="video-cadastros">
     <video controls preload="none" poster="imagens/10-clientes-lista.png" src="videos/02-cadastros.webm" aria-label="Vídeo: Cadastros"></video>
@@ -143,7 +148,7 @@
   </figure>
   <figure id="video-caixa">
     <video controls preload="none" poster="imagens/21-caixa-lancamentos.png" src="videos/03-caixa.webm" aria-label="Vídeo: Caixa rural"></video>
-    <figcaption><strong>Caixa rural · 40 s</strong>Escolher a propriedade, filtrar os lançamentos e preencher um lançamento novo.</figcaption>
+    <figcaption><strong>Caixa rural · 39 s</strong>Escolher a propriedade, filtrar os lançamentos e preencher um lançamento novo.</figcaption>
   </figure>
   <figure id="video-relatorios">
     <video controls preload="none" poster="imagens/32-livro-caixa.png" src="videos/04-relatorios.webm" aria-label="Vídeo: Relatórios"></video>
@@ -153,13 +158,26 @@
     <video controls preload="none" poster="imagens/27-gado.png" src="videos/05-gado.webm" aria-label="Vídeo: Gado"></video>
     <figcaption><strong>Gado · 26 s</strong>Movimento do rebanho e consulta do gado por proprietário.</figcaption>
   </figure>
+  <figure id="video-empresas">
+    <video controls preload="none" poster="imagens/04-trocar-empresa.png" src="videos/06-empresas.webm" aria-label="Vídeo: Empresas e permissões"></video>
+    <figcaption><strong>Empresas e permissões · 49 s</strong>Trocar de empresa, o aviso do caixa sem exercício, permissões por empresa e auditoria de todas as empresas.</figcaption>
+  </figure>
+  <figure id="video-licenca">
+    <video controls preload="none" poster="imagens/55-licenca-bloqueio.png" src="videos/07-licenca.webm" aria-label="Vídeo: Licença de uso"></video>
+    <figcaption><strong>Licença de uso · 42 s</strong>Do código da instalação ao código de licença: liberar o sistema pelo usuário ADMIN.</figcaption>
+  </figure>
 </div>
 
 <!-- ======================================================= -->
 <h2 id="acesso"><span class="num">1.</span>Acesso ao sistema</h2>
-<p>Abra o navegador e entre no endereço do WebRural informado pelo administrador. A tela de entrada pede o <strong>login</strong> e a <strong>senha</strong>.</p>
-<figure><a href="imagens/01-login.png"><img src="imagens/01-login.png" alt="Tela de entrada com os campos Login e Senha e o botão Entrar" loading="lazy" style="max-width:640px"></a>
-<figcaption>Tela de entrada. O login é digitado em letras maiúsculas automaticamente.</figcaption></figure>
+<p>Abra o navegador e entre no endereço do WebRural informado pelo administrador. A tela de entrada pede o <strong>login</strong>, a <strong>senha</strong> e a <strong>empresa</strong> em que você vai trabalhar.</p>
+<figure><a href="imagens/01-login.png"><img src="imagens/01-login.png" alt="Tela de entrada com os campos Login, Senha e Empresa e o botão Entrar" loading="lazy" style="max-width:640px"></a>
+<figcaption>Tela de entrada. Ao digitar o login, a empresa ligada ao seu usuário já vem marcada.</figcaption></figure>
+<ul>
+  <li>O login é digitado em letras maiúsculas automaticamente.</li>
+  <li>O campo <strong>Empresa</strong> lista todas as empresas cadastradas. Quando você digita o login, vem marcada a empresa do seu cadastro de funcionário; você pode escolher outra.</li>
+  <li>Você só entra numa empresa em que o administrador tenha dado alguma permissão. Dentro dela, o menu mostra só as rotinas liberadas para você <em>naquela</em> empresa.</li>
+</ul>
 
 <h3>Primeiro acesso</h3>
 <ol class="passos">
@@ -173,7 +191,14 @@
 <figure><a href="imagens/53-trocar-senha.png"><img src="imagens/53-trocar-senha.png" alt="Janela Trocar senha com senha atual, nova senha e confirmação" loading="lazy"></a>
 <figcaption>Troca de senha pelo ícone da chave.</figcaption></figure>
 
-<div class="atencao"><strong>Bloqueio por senha errada</strong>Depois de 4 tentativas com a senha errada, o login fica bloqueado por 15 minutos. Confira se a tecla <kbd>Caps Lock</kbd> está desligada. Se esqueceu a senha, peça ao administrador para deixá-la em branco: no próximo acesso você cria uma nova.</div>
+<div class="atencao"><strong>Bloqueio por senha errada</strong>Na 5ª tentativa com a senha errada, o login fica bloqueado por 15 minutos. Confira se a tecla <kbd>Caps Lock</kbd> está desligada. Se esqueceu a senha, peça ao administrador para deixá-la em branco: no próximo acesso você cria uma nova.</div>
+
+<h3 id="empresas">Escolher e trocar a empresa</h3>
+<a class="ver-video" href="#video-empresas">▶ Ver o vídeo desta parte</a>
+<p>O escritório pode trabalhar com mais de uma empresa. Cada empresa tem os seus próprios <strong>lançamentos, exercícios, zeramentos, recálculos, gado, imobilizado, plano de contas, vínculos dos proprietários e auditoria</strong>. Clientes, propriedades, fornecedores, bancos e as tabelas de apoio são os mesmos para todas.</p>
+<p>A empresa em que você está aparece no alto do menu e na barra superior. Para trocar <strong>sem sair do sistema</strong>, clique nela e escolha outra: as telas reabrem com os dados da empresa escolhida. Só aparecem as empresas em que você tem permissão.</p>
+<figure><a href="imagens/04-trocar-empresa.png"><img src="imagens/04-trocar-empresa.png" alt="Menu lateral com a lista de empresas aberta para a troca" loading="lazy" style="max-width:300px"></a>
+<figcaption>Troca de empresa pelo menu.</figcaption></figure>
 
 <h3>Sair e inatividade</h3>
 <p>Para sair, clique no ícone de saída, o último do canto superior direito. Se o sistema ficar parado por um tempo (definido no cadastro da empresa), aparece o aviso <em>“Sessão prestes a expirar”</em>; basta mexer o mouse ou apertar uma tecla para continuar. Se nada for feito, a sessão é encerrada e é preciso entrar de novo. O que já foi salvo não se perde.</p>
@@ -186,11 +211,13 @@
 <figcaption>Tela principal: menu à esquerda, barra superior e a área de trabalho.</figcaption></figure>
 <ul>
   <li><strong>Menu lateral (verde):</strong> organizado em <em>Cadastros</em>, <em>Movimentação</em>, <em>Relatórios</em>, <em>Gerenciamento de arquivos</em> e <em>Segurança</em>. Clique em <span class="caminho">Cadastros</span> para abrir a lista de cadastros. Cada usuário vê só as opções que tem permissão de usar.</li>
+  <li><strong>Empresa:</strong> no alto do menu, a empresa em que você está trabalhando (clique para trocar).</li>
   <li><strong>Barra superior:</strong> mostra onde você está (por exemplo, <em>Movimentação / Caixa rural</em>), o indicador <em>Serviços prontos</em> (verde quando o sistema está funcionando), o botão de verificar a conexão de novo, o seu nome e nível, a troca de senha e a saída.</li>
   <li><strong>Área de trabalho:</strong> o conteúdo da opção escolhida.</li>
 </ul>
 <figure><a href="imagens/03-menu.png"><img src="imagens/03-menu.png" alt="Menu lateral com a lista de cadastros aberta" loading="lazy" style="max-width:300px"></a>
 <figcaption>Menu lateral com os cadastros abertos.</figcaption></figure>
+<div class="nota"><strong>Avisos para o administrador</strong>Uma faixa amarela no topo das telas avisa o administrador quando a licença de uso está perto de vencer ou quando o backup do banco está atrasado. Nesses casos, fale com o responsável pelo servidor ou pelo sistema.</div>
 <div class="nota"><strong>Se o indicador ficar vermelho</strong>“API indisponível” ou “Serviços com falha” indica que o servidor não respondeu. Clique no botão de atualizar (as duas setas) e, se continuar, avise o administrador. Nada é gravado enquanto o sistema estiver fora.</div>
 
 <!-- ======================================================= -->
@@ -249,7 +276,8 @@
 <figure><a href="imagens/12-cliente-vinculos.png"><img src="imagens/12-cliente-vinculos.png" alt="Janela do cliente na aba Vínculos rurais, com a propriedade e o percentual" loading="lazy"></a>
 <figcaption>Cliente, aba Vínculos rurais: use <span class="botao">Incluir</span> para ligar o cliente a mais uma propriedade.</figcaption></figure>
 <div class="nota"><strong>Cliente novo</strong>As abas ficam liberadas depois que os dados do cliente são salvos. Ao incluir um cliente, a janela continua aberta para você já completar os vínculos e o capital.</div>
-<div class="atencao"><strong>Participação</strong>A soma dos percentuais dos proprietários de uma propriedade deve dar 100%. É por esse percentual que cada lançamento do caixa é dividido. Mudou a participação? Depois rode o <a href="#recalculo">Recálculo de saldos</a>.</div>
+<div class="nota"><strong>Vínculos por empresa</strong>Os vínculos (proprietário, propriedade e percentual) são de cada empresa: a aba mostra e altera os vínculos da empresa em que você está. Ao inativar um cliente, o sistema mostra o efeito em cada empresa em que ele participa.</div>
+<div class="atencao"><strong>Participação</strong>A soma dos percentuais dos proprietários de uma propriedade deve dar 100% em cada empresa. É por esse percentual que cada lançamento do caixa é dividido. Mudou a participação? Depois rode o <a href="#recalculo">Recálculo de saldos</a>.</div>
 
 <h3 id="propriedades">Propriedades rurais</h3>
 <p>Identificação da fazenda ou sítio: nome, área (ha), localização, INCRA, ITR, cidade/UF e se é propriedade de <em>destino</em> (usada nas transferências de gado). Os proprietários de cada propriedade são informados no cadastro do cliente, aba Vínculos.</p>
@@ -257,7 +285,7 @@
 <figcaption>Propriedades rurais.</figcaption></figure>
 
 <h3 id="plano">Plano de contas rural</h3>
-<p>As contas usadas nos lançamentos. Elas são organizadas em níveis pelo código (por exemplo, <code>4</code> Despesas › <code>4.01</code> Despesas de custeio › <code>4.01.06</code> Combustíveis).</p>
+<p>As contas usadas nos lançamentos. <strong>Cada empresa tem o seu plano de contas</strong>: uma empresa nova recebe uma cópia do plano da empresa em que o administrador está, e depois cada uma ajusta o seu (as contas copiadas recebem códigos próprios). Elas são organizadas em níveis pelo código (por exemplo, <code>4</code> Despesas › <code>4.01</code> Despesas de custeio › <code>4.01.06</code> Combustíveis).</p>
 <ul>
   <li><strong>Sintética:</strong> conta de agrupamento (soma as de baixo). Não recebe lançamento.</li>
   <li><strong>Analítica:</strong> conta que recebe lançamentos. Informe a <em>conta sintética</em> à qual ela pertence.</li>
@@ -272,9 +300,10 @@
 <figcaption>Alteração de uma conta.</figcaption></figure>
 
 <h3 id="empresa">Empresa</h3>
-<p>Os dados do escritório, que saem no cabeçalho dos relatórios e no arquivo do LCDPR: razão social, CNPJ, endereço e os <strong>dados do contador</strong> (nome, CPF, CRC, e-mail e telefone). Aqui também ficam duas regras de segurança: o <strong>tempo de inatividade</strong> (em segundos) antes de encerrar a sessão e a <strong>validade da senha</strong> (em dias).</p>
+<p>Os dados de cada empresa do escritório, que saem no cabeçalho dos relatórios e no arquivo do LCDPR: razão social, CNPJ, endereço e os <strong>dados do contador</strong> (nome, CPF, CRC, e-mail e telefone). Aqui também ficam duas regras de segurança: o <strong>tempo de inatividade</strong> (em segundos) antes de encerrar a sessão e a <strong>validade da senha</strong> (em dias).</p>
 <figure><a href="imagens/18-empresa.png"><img src="imagens/18-empresa.png" alt="Janela do cadastro da empresa" loading="lazy"></a>
 <figcaption>Cadastro da empresa.</figcaption></figure>
+<p>Para trabalhar com mais de uma empresa, inclua as outras aqui (somente administradores). Depois dê as permissões dos usuários em cada empresa (<a href="#permissoes">Permissões de acesso</a>). Uma empresa só pode ser excluída enquanto não tiver movimento.</p>
 
 <h3 id="lista-cadastros">Os demais cadastros</h3>
 <table>
@@ -288,7 +317,7 @@
     <tr><td>Grupos de imobilizado</td><td>Grupos dos bens (máquinas, veículos, benfeitorias).</td></tr>
     <tr><td>Departamentos</td><td>Departamentos do escritório, usados no cadastro de funcionários.</td></tr>
     <tr><td>Fornecedores</td><td>Fornecedores informados nos lançamentos e no LCDPR, com CPF/CNPJ.</td></tr>
-    <tr><td>Funcionários</td><td>Pessoas do escritório. Todo usuário do sistema é ligado a um funcionário.</td></tr>
+    <tr><td>Funcionários</td><td>Pessoas do escritório. Todo usuário do sistema é ligado a um funcionário; a <strong>empresa</strong> do funcionário é a que vem marcada quando o usuário entra no sistema.</td></tr>
     <tr><td>Prejuízos a compensar</td><td>Ajuste do prejuízo a compensar de um cliente em um ano. Sem ajuste, a apuração calcula pelos anos anteriores.</td></tr>
     <tr><td>Tabela IRRF</td><td>Faixas do imposto de renda (valor inicial e final, alíquota, dedução e dedução por dependente), por mês e ano. Usada na apuração de resultados.</td></tr>
     <tr><td>Tipos de importação</td><td>Layouts de planilha ou arquivo texto; na aba <em>Colunas</em>, qual coluna da planilha corresponde a cada campo do lançamento.</td></tr>
@@ -309,6 +338,9 @@
 </ol>
 <figure><a href="imagens/21-caixa-lancamentos.png"><img src="imagens/21-caixa-lancamentos.png" alt="Caixa rural com a Fazenda Santa Luzia, exercício 2026 e a lista de lançamentos" loading="lazy"></a>
 <figcaption>Caixa rural com a propriedade e o exercício escolhidos.</figcaption></figure>
+<p>Se a propriedade não tem exercício aberto (nenhum, ou todos encerrados), ou se o exercício escolhido está encerrado, o botão <span class="botao">Novo lançamento</span> fica apagado e um aviso amarelo explica o motivo e o que fazer: abrir o exercício, escolher o exercício aberto ou reabrir o encerrado.</p>
+<figure><a href="imagens/20-caixa-sem-exercicio.png"><img src="imagens/20-caixa-sem-exercicio.png" alt="Caixa rural com o aviso de que a propriedade não possui exercício aberto" loading="lazy"></a>
+<figcaption>Propriedade sem exercício aberto nesta empresa: o aviso explica por que não dá para lançar.</figcaption></figure>
 
 <h3>Consultar lançamentos</h3>
 <p>Filtre por conta, período (data inicial e final) e pelo texto do histórico, documento ou número. Use <span class="botao claro">Limpar</span> para voltar a ver tudo.</p>
@@ -479,14 +511,15 @@
 
 <!-- ======================================================= -->
 <h2 id="permissoes"><span class="num">16.</span>Permissões de acesso</h2>
-<p><span class="caminho">Segurança › Permissões de acesso</span> (somente administradores). Administradores acessam tudo. Para o nível <em>Usuário</em>, escolha o usuário e marque, em cada tela:</p>
+<p><span class="caminho">Segurança › Permissões de acesso</span> (somente administradores). Administradores acessam tudo, em todas as empresas. Para o nível <em>Usuário</em>, escolha o usuário e a <strong>empresa</strong> e marque, em cada tela:</p>
 <ul>
   <li><strong>Acesso:</strong> a tela aparece no menu e o usuário pode pesquisar e consultar.</li>
   <li><strong>Incluir</strong>, <strong>Alterar</strong> e <strong>Excluir:</strong> o que ele pode fazer além de consultar. O traço (–) indica uma ação que aquela tela não tem.</li>
 </ul>
 <p>Clique em <span class="botao">Salvar permissões</span>. O usuário vê o menu atualizado quando entrar de novo ou recarregar a página.</p>
+<p>As permissões valem <strong>só para a empresa escolhida</strong>. A lista de empresas mostra quantas aplicações o usuário tem em cada uma; com <em>(sem acesso)</em>, ele não consegue entrar naquela empresa.</p>
 <figure><a href="imagens/51-permissoes.png"><img src="imagens/51-permissoes.png" alt="Permissões do usuário ANA.PAULA por aplicação" loading="lazy"></a>
-<figcaption>Permissões de um usuário.</figcaption></figure>
+<figcaption>Permissões de um usuário na empresa escolhida.</figcaption></figure>
 
 <!-- ======================================================= -->
 <h2 id="auditoria"><span class="num">17.</span>Auditoria</h2>
@@ -496,14 +529,39 @@
   <li><strong>Entradas no sistema:</strong> os acessos e as tentativas negadas (senha errada, usuário bloqueado ou inativo).</li>
   <li><strong>Sistema anterior:</strong> o histórico de alterações gravado pelo sistema Rural antigo.</li>
 </ul>
-<p>Filtre por período, cadastro ou movimento, operação, login e código do registro.</p>
+<p>Filtre por período, cadastro ou movimento, operação, login e código do registro. Tudo é gravado com a <strong>empresa</strong> em que foi feito. O administrador escolhe no campo <em>Empresa</em> a empresa atual, outra empresa ou <strong>Todas as empresas</strong> (nesse caso aparece a coluna EMPRESA); os demais usuários veem só a empresa em que estão.</p>
 <figure><a href="imagens/52-auditoria.png"><img src="imagens/52-auditoria.png" alt="Auditoria com a lista de alterações" loading="lazy"></a>
-<figcaption>Auditoria: alterações de dados.</figcaption></figure>
+<figcaption>Auditoria de todas as empresas, com a coluna da empresa.</figcaption></figure>
 
 <!-- ======================================================= -->
-<h2 id="rotina"><span class="num">18.</span>Rotina sugerida</h2>
+<h2 id="licenca"><span class="num">18.</span>Licença de uso</h2>
+<a class="ver-video" href="#video-licenca">▶ Ver o vídeo desta parte</a>
+<p>O WebRural funciona com uma <strong>licença de uso</strong> liberada pelo fornecedor, válida até uma data. Sem licença, vencida ou bloqueada, o sistema mostra uma tela com o motivo no lugar da entrada. <strong>Nenhum dado é perdido</strong>: depois de liberado, tudo volta como estava.</p>
+<figure><a href="imagens/55-licenca-bloqueio.png"><img src="imagens/55-licenca-bloqueio.png" alt="Tela de licença ainda não ativada, com o código da instalação e o formulário de ativação" loading="lazy" style="max-width:640px"></a>
+<figcaption>Licença não ativada: o código desta instalação e o campo para o código de licença.</figcaption></figure>
+<h3>Liberar ou renovar</h3>
+<ol class="passos">
+  <li>Copie o <strong>código desta instalação</strong> (algo como <code>RW-1A2B-3C4D-5E6F</code>) e envie ao fornecedor. Ele aparece na tela acima e, com o sistema liberado, em <span class="caminho">Segurança › Licença de uso</span>.</li>
+  <li>O fornecedor devolve um <strong>código de licença</strong> (um texto longo). Ele vale só para esta instalação e até a data liberada.</li>
+  <li>O usuário <strong>ADMIN</strong> cola o código no campo <em>Código de licença</em>, digita a senha do ADMIN e clica em <span class="botao">Liberar acesso</span>.</li>
+</ol>
+<figure><a href="imagens/54-licenca.png"><img src="imagens/54-licenca.png" alt="Tela Licença de uso com a situação, o código da instalação e o campo para o novo código" loading="lazy"></a>
+<figcaption>Segurança › Licença de uso (só o usuário ADMIN): situação, data final e renovação.</figcaption></figure>
+<div class="atencao"><strong>Somente o usuário ADMIN</strong>Só o login ADMIN ativa a licença, sempre confirmando a senha. A senha errada conta como tentativa e bloqueia o ADMIN na 5ª. Um código de outra instalação, alterado ou mais antigo que o atual é recusado.</div>
+<p>Faltando 30 dias para o fim do período, o administrador vê um aviso no topo das telas. Se a sua instalação consulta a central do fornecedor pela internet, renovações e bloqueios valem sozinhos; o botão <span class="botao claro">Verificar novamente</span> confere na hora.</p>
+<details class="fornecedor"><summary>Para o fornecedor: central de licenças</summary>
+<p>Na central de licenças, entre com o usuário <strong>ADMIN</strong> e a sua senha. Em cada cliente, <span class="botao">Gerar código</span> pede o código da instalação e devolve o código de licença, com o botão <em>Copiar código</em>. Para estender a data, use <em>Renovar</em> antes de gerar o código. O histórico registra cada código gerado. Detalhes de instalação no guia <code>Licencas/README.md</code>.</p>
+<figure><a href="imagens/61-central-clientes.png"><img src="imagens/61-central-clientes.png" alt="Painel da central de licenças com a lista de clientes" loading="lazy"></a>
+<figcaption>Central de licenças: clientes, situação, data liberada e ações.</figcaption></figure>
+<figure><a href="imagens/62-central-gerar-codigo.png"><img src="imagens/62-central-gerar-codigo.png" alt="Janela Código de licença com o campo Código da instalação" loading="lazy" style="max-width:560px"></a>
+<figcaption>Gerar o código de licença para o código da instalação do cliente.</figcaption></figure>
+</details>
+
+<!-- ======================================================= -->
+<h2 id="rotina"><span class="num">19.</span>Rotina sugerida</h2>
 <h4>Ao receber um cliente novo</h4>
 <ol>
+  <li>Confira se está na empresa certa (alto do menu).</li>
   <li>Cadastre a propriedade em <em>Propriedades rurais</em>.</li>
   <li>Cadastre o cliente e, na aba <em>Vínculos rurais</em>, ligue-o à propriedade com o percentual (a soma dos proprietários deve dar 100%).</li>
   <li>No <em>Caixa rural</em>, abra o exercício da propriedade.</li>
@@ -522,13 +580,19 @@
 </ol>
 
 <!-- ======================================================= -->
-<h2 id="duvidas"><span class="num">19.</span>Dúvidas frequentes</h2>
+<h2 id="duvidas"><span class="num">20.</span>Dúvidas frequentes</h2>
 <h4>Não consigo entrar.</h4>
-<p>Confira o <kbd>Caps Lock</kbd>. Depois de 4 senhas erradas o login fica bloqueado por 15 minutos. Se esqueceu a senha, peça ao administrador para inicializá-la.</p>
+<p>Confira o <kbd>Caps Lock</kbd>. Na 5ª senha errada o login fica bloqueado por 15 minutos. Se esqueceu a senha, peça ao administrador para inicializá-la.</p>
+<h4>“Você não tem acesso à empresa…”</h4>
+<p>A senha está certa, mas você não tem permissão na empresa escolhida. Escolha outra empresa no campo <em>Empresa</em> ou peça ao administrador para liberar em <em>Permissões de acesso</em>, naquela empresa.</p>
+<h4>O sistema mostra “Licença…” em vez da tela de entrada.</h4>
+<p>A licença de uso não está ativada, venceu ou foi bloqueada. Leia o motivo na tela e fale com o fornecedor. Veja <a href="#licenca">Licença de uso</a>.</p>
+<h4>Não encontro os lançamentos de outra empresa.</h4>
+<p>Cada empresa vê só os próprios movimentos. Troque de empresa pelo alto do menu.</p>
 <h4>Uma opção do menu não aparece ou um botão está apagado.</h4>
 <p>O seu usuário não tem permissão para ela. Peça ao administrador para liberar em <em>Permissões de acesso</em>.</p>
 <h4>Não consigo lançar ou alterar um lançamento.</h4>
-<p>O exercício pode estar encerrado (aparece “Encerrado” ao lado do exercício) ou o exercício do ano ainda não foi aberto.</p>
+<p>O aviso amarelo no Caixa diz o motivo: o exercício pode estar encerrado, ainda não ter sido aberto nesta empresa, ou o seu usuário não tem permissão de incluir.</p>
 <h4>O valor de um proprietário está errado.</h4>
 <p>Confira o percentual dele no cliente, aba <em>Vínculos rurais</em>. Se a participação mudou, rode o <em>Recálculo de saldos</em> a partir da data da mudança.</p>
 <h4>Não consigo excluir um cadastro.</h4>
