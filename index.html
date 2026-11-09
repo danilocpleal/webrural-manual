@@ -81,7 +81,21 @@
   details.fornecedor { margin: 20px 0; padding: 12px 16px; background: var(--forest-soft); border: 1px solid var(--line, #dfe7e2); border-radius: 6px; }
   details.fornecedor summary { cursor: pointer; font-weight: 700; color: var(--forest); }
   details.fornecedor[open] summary { margin-bottom: 10px; }
+  /* Protecao contra copia: sem selecionar/arrastar midia, ampliacao na pagina, marca d'agua e sem impressao. */
+  figure img, video { -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
+  figure img { cursor: zoom-in; }
+  .manual-ampliada { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 24px; background: rgba(12, 28, 22, .88); cursor: zoom-out; }
+  .manual-ampliada[hidden] { display: none; }
+  .manual-ampliada img { max-width: 100%; max-height: 100%; box-shadow: 0 20px 60px rgba(0,0,0,.4); -webkit-user-drag: none; user-select: none; }
+  .manual-marca { position: fixed; inset: -20%; z-index: 1001; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 70px 90px; padding: 40px; overflow: hidden;
+    pointer-events: none; transform: rotate(-24deg); color: rgba(23, 75, 60, .07); font: 700 15px/1 "Segoe UI", system-ui, sans-serif; white-space: nowrap; user-select: none; }
+  body.manual-coberto > *:not(.manual-marca) { filter: blur(18px); }
+  @media print {
+    body > * { display: none !important; }
+    body::after { content: "A impressão do manual não é permitida."; display: block; padding: 40px; font: 16px sans-serif; }
+  }
 </style>
+<script src="manual.js" defer></script>
 </head>
 <body>
 <div class="layout">
@@ -132,38 +146,38 @@
 </header>
 
 <p>O WebRural é a nova versão do sistema Rural, agora usada pelo navegador (Chrome, Edge ou Firefox), sem instalar nada no computador. Ele faz o mesmo que o sistema anterior: controla o livro caixa de cada propriedade, divide cada lançamento entre os proprietários conforme a participação de cada um, acompanha o rebanho e gera relatórios, a apuração do resultado e o arquivo do LCDPR.</p>
-<p>Use o índice ao lado para ir direto ao assunto. Clique em qualquer imagem para vê-la no tamanho real.</p>
+<p>Use o índice ao lado para ir direto ao assunto. Clique em qualquer imagem para vê-la no tamanho real. Dentro do sistema, o botão <strong>?</strong> (ou a tecla <kbd>F1</kbd>) mostra a ajuda da tela aberta e abre este manual na parte certa.</p>
 
 <!-- ======================================================= -->
 <h2 id="videos">Vídeos de demonstração</h2>
 <p>Sete vídeos curtos mostram o sistema em uso, com legendas explicando cada passo. Clique no vídeo para assistir; o botão no canto do vídeo coloca em tela cheia. Os vídeos não têm som.</p>
 <div class="videos">
   <figure id="video-visao-geral">
-    <video controls preload="none" poster="imagens/02-inicio.png" src="videos/01-visao-geral.webm" aria-label="Vídeo: Visão geral"></video>
+    <video controls controlslist="nodownload noremoteplayback noplaybackrate" disablepictureinpicture disableremoteplayback preload="none" poster="imagens/02-inicio.png" src="videos/01-visao-geral.webm" aria-label="Vídeo: Visão geral"></video>
     <figcaption><strong>Visão geral · 49 s</strong>Entrar no sistema (com a empresa já marcada) e conhecer o menu.</figcaption>
   </figure>
   <figure id="video-cadastros">
-    <video controls preload="none" poster="imagens/10-clientes-lista.png" src="videos/02-cadastros.webm" aria-label="Vídeo: Cadastros"></video>
+    <video controls controlslist="nodownload noremoteplayback noplaybackrate" disablepictureinpicture disableremoteplayback preload="none" poster="imagens/10-clientes-lista.png" src="videos/02-cadastros.webm" aria-label="Vídeo: Cadastros"></video>
     <figcaption><strong>Cadastros · 34 s</strong>Pesquisar, limpar a pesquisa e abrir o cadastro de um cliente com as abas.</figcaption>
   </figure>
   <figure id="video-caixa">
-    <video controls preload="none" poster="imagens/21-caixa-lancamentos.png" src="videos/03-caixa.webm" aria-label="Vídeo: Caixa rural"></video>
+    <video controls controlslist="nodownload noremoteplayback noplaybackrate" disablepictureinpicture disableremoteplayback preload="none" poster="imagens/21-caixa-lancamentos.png" src="videos/03-caixa.webm" aria-label="Vídeo: Caixa rural"></video>
     <figcaption><strong>Caixa rural · 39 s</strong>Escolher a propriedade, filtrar os lançamentos e preencher um lançamento novo.</figcaption>
   </figure>
   <figure id="video-relatorios">
-    <video controls preload="none" poster="imagens/32-livro-caixa.png" src="videos/04-relatorios.webm" aria-label="Vídeo: Relatórios"></video>
+    <video controls controlslist="nodownload noremoteplayback noplaybackrate" disablepictureinpicture disableremoteplayback preload="none" poster="imagens/32-livro-caixa.png" src="videos/04-relatorios.webm" aria-label="Vídeo: Relatórios"></video>
     <figcaption><strong>Relatórios · 36 s</strong>Gerar o livro caixa, a DRE e os gráficos sem sair da tela.</figcaption>
   </figure>
   <figure id="video-gado">
-    <video controls preload="none" poster="imagens/27-gado.png" src="videos/05-gado.webm" aria-label="Vídeo: Gado"></video>
+    <video controls controlslist="nodownload noremoteplayback noplaybackrate" disablepictureinpicture disableremoteplayback preload="none" poster="imagens/27-gado.png" src="videos/05-gado.webm" aria-label="Vídeo: Gado"></video>
     <figcaption><strong>Gado · 26 s</strong>Movimento do rebanho e consulta do gado por proprietário.</figcaption>
   </figure>
   <figure id="video-empresas">
-    <video controls preload="none" poster="imagens/04-trocar-empresa.png" src="videos/06-empresas.webm" aria-label="Vídeo: Empresas e permissões"></video>
+    <video controls controlslist="nodownload noremoteplayback noplaybackrate" disablepictureinpicture disableremoteplayback preload="none" poster="imagens/04-trocar-empresa.png" src="videos/06-empresas.webm" aria-label="Vídeo: Empresas e permissões"></video>
     <figcaption><strong>Empresas e permissões · 49 s</strong>Trocar de empresa, o aviso do caixa sem exercício, permissões por empresa e auditoria de todas as empresas.</figcaption>
   </figure>
   <figure id="video-licenca">
-    <video controls preload="none" poster="imagens/55-licenca-bloqueio.png" src="videos/07-licenca.webm" aria-label="Vídeo: Licença de uso"></video>
+    <video controls controlslist="nodownload noremoteplayback noplaybackrate" disablepictureinpicture disableremoteplayback preload="none" poster="imagens/55-licenca-bloqueio.png" src="videos/07-licenca.webm" aria-label="Vídeo: Licença de uso"></video>
     <figcaption><strong>Licença de uso · 42 s</strong>Do código da instalação ao código de licença: liberar o sistema pelo usuário ADMIN.</figcaption>
   </figure>
 </div>
@@ -171,7 +185,7 @@
 <!-- ======================================================= -->
 <h2 id="acesso"><span class="num">1.</span>Acesso ao sistema</h2>
 <p>Abra o navegador e entre no endereço do WebRural informado pelo administrador. A tela de entrada pede o <strong>login</strong>, a <strong>senha</strong> e a <strong>empresa</strong> em que você vai trabalhar.</p>
-<figure><a href="imagens/01-login.png"><img src="imagens/01-login.png" alt="Tela de entrada com os campos Login, Senha e Empresa e o botão Entrar" loading="lazy" style="max-width:640px"></a>
+<figure><img src="imagens/01-login.png" alt="Tela de entrada com os campos Login, Senha e Empresa e o botão Entrar" loading="lazy" style="max-width:640px">
 <figcaption>Tela de entrada. Ao digitar o login, a empresa ligada ao seu usuário já vem marcada.</figcaption></figure>
 <ul>
   <li>O login é digitado em letras maiúsculas automaticamente.</li>
@@ -188,7 +202,7 @@
 
 <h3>Trocar a senha</h3>
 <p>A qualquer momento, clique no ícone da chave 🔑, no canto superior direito, ao lado do seu nome. Informe a senha atual, a nova senha e a confirmação. A senha também vence depois de alguns dias (prazo definido no cadastro da empresa); quando vencer, o sistema pede a troca ao entrar.</p>
-<figure><a href="imagens/53-trocar-senha.png"><img src="imagens/53-trocar-senha.png" alt="Janela Trocar senha com senha atual, nova senha e confirmação" loading="lazy"></a>
+<figure><img src="imagens/53-trocar-senha.png" alt="Janela Trocar senha com senha atual, nova senha e confirmação" loading="lazy">
 <figcaption>Troca de senha pelo ícone da chave.</figcaption></figure>
 
 <div class="atencao"><strong>Bloqueio por senha errada</strong>Na 5ª tentativa com a senha errada, o login fica bloqueado por 15 minutos. Confira se a tecla <kbd>Caps Lock</kbd> está desligada. Se esqueceu a senha, peça ao administrador para deixá-la em branco: no próximo acesso você cria uma nova.</div>
@@ -197,7 +211,7 @@
 <a class="ver-video" href="#video-empresas">▶ Ver o vídeo desta parte</a>
 <p>O escritório pode trabalhar com mais de uma empresa. Cada empresa tem os seus próprios <strong>lançamentos, exercícios, zeramentos, recálculos, gado, imobilizado, plano de contas, vínculos dos proprietários e auditoria</strong>. Clientes, propriedades, fornecedores, bancos e as tabelas de apoio são os mesmos para todas.</p>
 <p>A empresa em que você está aparece no alto do menu e na barra superior. Para trocar <strong>sem sair do sistema</strong>, clique nela e escolha outra: as telas reabrem com os dados da empresa escolhida. Só aparecem as empresas em que você tem permissão.</p>
-<figure><a href="imagens/04-trocar-empresa.png"><img src="imagens/04-trocar-empresa.png" alt="Menu lateral com a lista de empresas aberta para a troca" loading="lazy" style="max-width:300px"></a>
+<figure><img src="imagens/04-trocar-empresa.png" alt="Menu lateral com a lista de empresas aberta para a troca" loading="lazy" style="max-width:300px">
 <figcaption>Troca de empresa pelo menu.</figcaption></figure>
 
 <h3>Sair e inatividade</h3>
@@ -207,15 +221,16 @@
 <h2 id="tela"><span class="num">2.</span>Conhecendo a tela</h2>
 <a class="ver-video" href="#video-visao-geral">▶ Ver o vídeo desta parte</a>
 <p>Depois de entrar, o sistema abre no <strong>Caixa rural</strong>. A tela tem três partes:</p>
-<figure><a href="imagens/02-inicio.png"><img src="imagens/02-inicio.png" alt="Tela principal com o menu verde à esquerda, a barra superior e o Caixa rural" loading="lazy"></a>
+<figure><img src="imagens/02-inicio.png" alt="Tela principal com o menu verde à esquerda, a barra superior e o Caixa rural" loading="lazy">
 <figcaption>Tela principal: menu à esquerda, barra superior e a área de trabalho.</figcaption></figure>
 <ul>
   <li><strong>Menu lateral (verde):</strong> organizado em <em>Cadastros</em>, <em>Movimentação</em>, <em>Relatórios</em>, <em>Gerenciamento de arquivos</em> e <em>Segurança</em>. Clique em <span class="caminho">Cadastros</span> para abrir a lista de cadastros. Cada usuário vê só as opções que tem permissão de usar.</li>
   <li><strong>Empresa:</strong> no alto do menu, a empresa em que você está trabalhando (clique para trocar).</li>
+  <li><strong>Ajuda (?):</strong> o botão com o ponto de interrogação, na barra superior, abre a ajuda da tela em que você está: para que ela serve, os passos principais e dicas, com links para a parte deste manual e para o vídeo. A tecla <kbd>F1</kbd> faz o mesmo em qualquer tela; <kbd>Esc</kbd> fecha.</li>
   <li><strong>Barra superior:</strong> mostra onde você está (por exemplo, <em>Movimentação / Caixa rural</em>), o indicador <em>Serviços prontos</em> (verde quando o sistema está funcionando), o botão de verificar a conexão de novo, o seu nome e nível, a troca de senha e a saída.</li>
   <li><strong>Área de trabalho:</strong> o conteúdo da opção escolhida.</li>
 </ul>
-<figure><a href="imagens/03-menu.png"><img src="imagens/03-menu.png" alt="Menu lateral com a lista de cadastros aberta" loading="lazy" style="max-width:300px"></a>
+<figure><img src="imagens/03-menu.png" alt="Menu lateral com a lista de cadastros aberta" loading="lazy" style="max-width:300px">
 <figcaption>Menu lateral com os cadastros abertos.</figcaption></figure>
 <div class="nota"><strong>Avisos para o administrador</strong>Uma faixa amarela no topo das telas avisa o administrador quando a licença de uso está perto de vencer ou quando o backup do banco está atrasado. Nesses casos, fale com o responsável pelo servidor ou pelo sistema.</div>
 <div class="nota"><strong>Se o indicador ficar vermelho</strong>“API indisponível” ou “Serviços com falha” indica que o servidor não respondeu. Clique no botão de atualizar (as duas setas) e, se continuar, avise o administrador. Nada é gravado enquanto o sistema estiver fora.</div>
@@ -230,7 +245,7 @@
   <li><strong>Apagou o que tinha pesquisado?</strong> A pesquisa é refeita sozinha com o que ficou nos outros campos, sem precisar clicar em Consultar.</li>
   <li>O botão <span class="botao claro">Limpar</span> esvazia todos os filtros e mostra tudo de novo.</li>
 </ul>
-<figure><a href="imagens/14-pesquisa.png"><img src="imagens/14-pesquisa.png" alt="Pesquisa de clientes filtrada por MARIA com os botões Pesquisar e Limpar" loading="lazy"></a>
+<figure><img src="imagens/14-pesquisa.png" alt="Pesquisa de clientes filtrada por MARIA com os botões Pesquisar e Limpar" loading="lazy">
 <figcaption>Pesquisa por texto, com os botões Pesquisar e Limpar.</figcaption></figure>
 
 <h3>Campos de pesquisa com lista</h3>
@@ -254,9 +269,9 @@
 <h2 id="cadastros"><span class="num">4.</span>Cadastros</h2>
 <a class="ver-video" href="#video-cadastros">▶ Ver o vídeo desta parte</a>
 <p>Abra <span class="caminho">Cadastros</span> no menu e escolha o cadastro. Todos têm a mesma tela: a pesquisa no topo, a lista com as informações mais importantes e os botões de alterar e excluir em cada linha.</p>
-<figure><a href="imagens/10-clientes-lista.png"><img src="imagens/10-clientes-lista.png" alt="Lista de clientes com apelido, nome, CPF, cidade, UF e ações" loading="lazy"></a>
+<figure><img src="imagens/10-clientes-lista.png" alt="Lista de clientes com apelido, nome, CPF, cidade, UF e ações" loading="lazy">
 <figcaption>Pesquisa de clientes.</figcaption></figure>
-<figure><a href="imagens/19-novo-cadastro.png"><img src="imagens/19-novo-cadastro.png" alt="Janela de inclusão de fornecedor" loading="lazy"></a>
+<figure><img src="imagens/19-novo-cadastro.png" alt="Janela de inclusão de fornecedor" loading="lazy">
 <figcaption>Janela de inclusão (exemplo: fornecedor).</figcaption></figure>
 <div class="nota"><strong>Exclusão protegida</strong>Não é possível excluir um registro que já está sendo usado (por exemplo, uma conta com lançamentos ou um cliente vinculado a uma propriedade). O sistema avisa e sugere <strong>inativar</strong> o registro em vez de excluir.</div>
 
@@ -271,9 +286,9 @@
     <tr><td>Prejuízos a compensar</td><td>Apenas consulta. Os ajustes são feitos em <span class="caminho">Cadastros › Prejuízos a compensar</span>.</td></tr>
   </tbody>
 </table>
-<figure><a href="imagens/11-cliente-dados.png"><img src="imagens/11-cliente-dados.png" alt="Janela do cliente na aba Dados" loading="lazy"></a>
+<figure><img src="imagens/11-cliente-dados.png" alt="Janela do cliente na aba Dados" loading="lazy">
 <figcaption>Cliente, aba Dados.</figcaption></figure>
-<figure><a href="imagens/12-cliente-vinculos.png"><img src="imagens/12-cliente-vinculos.png" alt="Janela do cliente na aba Vínculos rurais, com a propriedade e o percentual" loading="lazy"></a>
+<figure><img src="imagens/12-cliente-vinculos.png" alt="Janela do cliente na aba Vínculos rurais, com a propriedade e o percentual" loading="lazy">
 <figcaption>Cliente, aba Vínculos rurais: use <span class="botao">Incluir</span> para ligar o cliente a mais uma propriedade.</figcaption></figure>
 <div class="nota"><strong>Cliente novo</strong>As abas ficam liberadas depois que os dados do cliente são salvos. Ao incluir um cliente, a janela continua aberta para você já completar os vínculos e o capital.</div>
 <div class="nota"><strong>Vínculos por empresa</strong>Os vínculos (proprietário, propriedade e percentual) são de cada empresa: a aba mostra e altera os vínculos da empresa em que você está. Ao inativar um cliente, o sistema mostra o efeito em cada empresa em que ele participa.</div>
@@ -281,7 +296,7 @@
 
 <h3 id="propriedades">Propriedades rurais</h3>
 <p>Identificação da fazenda ou sítio: nome, área (ha), localização, INCRA, ITR, cidade/UF e se é propriedade de <em>destino</em> (usada nas transferências de gado). Os proprietários de cada propriedade são informados no cadastro do cliente, aba Vínculos.</p>
-<figure><a href="imagens/15-propriedades.png"><img src="imagens/15-propriedades.png" alt="Lista de propriedades rurais" loading="lazy"></a>
+<figure><img src="imagens/15-propriedades.png" alt="Lista de propriedades rurais" loading="lazy">
 <figcaption>Propriedades rurais.</figcaption></figure>
 
 <h3 id="plano">Plano de contas rural</h3>
@@ -294,14 +309,14 @@
   <li><strong>Despesa não dedutível</strong>, <strong>receita não operacional</strong>, <strong>conta de bens</strong> e <strong>aparece no livro caixa</strong> ajustam como a conta entra na apuração e nos relatórios.</li>
   <li>A aba <em>Vínculos de importação</em> liga a conta ao código ou descrição usados nas planilhas importadas.</li>
 </ul>
-<figure><a href="imagens/16-plano-contas.png"><img src="imagens/16-plano-contas.png" alt="Lista do plano de contas" loading="lazy"></a>
+<figure><img src="imagens/16-plano-contas.png" alt="Lista do plano de contas" loading="lazy">
 <figcaption>Plano de contas rural.</figcaption></figure>
-<figure><a href="imagens/17-conta-editar.png"><img src="imagens/17-conta-editar.png" alt="Janela de alteração de uma conta do plano" loading="lazy"></a>
+<figure><img src="imagens/17-conta-editar.png" alt="Janela de alteração de uma conta do plano" loading="lazy">
 <figcaption>Alteração de uma conta.</figcaption></figure>
 
 <h3 id="empresa">Empresa</h3>
 <p>Os dados de cada empresa do escritório, que saem no cabeçalho dos relatórios e no arquivo do LCDPR: razão social, CNPJ, endereço e os <strong>dados do contador</strong> (nome, CPF, CRC, e-mail e telefone). Aqui também ficam duas regras de segurança: o <strong>tempo de inatividade</strong> (em segundos) antes de encerrar a sessão e a <strong>validade da senha</strong> (em dias).</p>
-<figure><a href="imagens/18-empresa.png"><img src="imagens/18-empresa.png" alt="Janela do cadastro da empresa" loading="lazy"></a>
+<figure><img src="imagens/18-empresa.png" alt="Janela do cadastro da empresa" loading="lazy">
 <figcaption>Cadastro da empresa.</figcaption></figure>
 <p>Para trabalhar com mais de uma empresa, inclua as outras aqui (somente administradores). Depois dê as permissões dos usuários em cada empresa (<a href="#permissoes">Permissões de acesso</a>). Uma empresa só pode ser excluída enquanto não tiver movimento.</p>
 
@@ -336,10 +351,10 @@
   <li>Em <strong>Exercício</strong>, escolha o ano. Se o ano ainda não existe, digite-o e clique em <span class="botao claro">Abrir exercício</span>.</li>
   <li>Os lançamentos do exercício aparecem embaixo, com os totais de receitas, despesas e o saldo.</li>
 </ol>
-<figure><a href="imagens/21-caixa-lancamentos.png"><img src="imagens/21-caixa-lancamentos.png" alt="Caixa rural com a Fazenda Santa Luzia, exercício 2026 e a lista de lançamentos" loading="lazy"></a>
+<figure><img src="imagens/21-caixa-lancamentos.png" alt="Caixa rural com a Fazenda Santa Luzia, exercício 2026 e a lista de lançamentos" loading="lazy">
 <figcaption>Caixa rural com a propriedade e o exercício escolhidos.</figcaption></figure>
 <p>Se a propriedade não tem exercício aberto (nenhum, ou todos encerrados), ou se o exercício escolhido está encerrado, o botão <span class="botao">Novo lançamento</span> fica apagado e um aviso amarelo explica o motivo e o que fazer: abrir o exercício, escolher o exercício aberto ou reabrir o encerrado.</p>
-<figure><a href="imagens/20-caixa-sem-exercicio.png"><img src="imagens/20-caixa-sem-exercicio.png" alt="Caixa rural com o aviso de que a propriedade não possui exercício aberto" loading="lazy"></a>
+<figure><img src="imagens/20-caixa-sem-exercicio.png" alt="Caixa rural com o aviso de que a propriedade não possui exercício aberto" loading="lazy">
 <figcaption>Propriedade sem exercício aberto nesta empresa: o aviso explica por que não dá para lançar.</figcaption></figure>
 
 <h3>Consultar lançamentos</h3>
@@ -347,7 +362,7 @@
 
 <h3>Incluir um lançamento</h3>
 <p>Clique em <span class="botao">Novo lançamento</span>. O cabeçalho verde mostra em qual propriedade e exercício você está lançando.</p>
-<figure><a href="imagens/23-lancamento-novo.png"><img src="imagens/23-lancamento-novo.png" alt="Janela de novo lançamento" loading="lazy"></a>
+<figure><img src="imagens/23-lancamento-novo.png" alt="Janela de novo lançamento" loading="lazy">
 <figcaption>Novo lançamento.</figcaption></figure>
 <table>
   <thead><tr><th>Campo</th><th>Como preencher</th></tr></thead>
@@ -366,7 +381,7 @@
 
 <h3>Alterar ou excluir</h3>
 <p>Clique no lançamento na lista. A janela mostra os dados e o rateio. Altere e salve, ou use <span class="botao claro">Excluir</span>.</p>
-<figure><a href="imagens/22-lancamento.png"><img src="imagens/22-lancamento.png" alt="Janela de alteração de lançamento com a propriedade no cabeçalho" loading="lazy"></a>
+<figure><img src="imagens/22-lancamento.png" alt="Janela de alteração de lançamento com a propriedade no cabeçalho" loading="lazy">
 <figcaption>Alteração de lançamento: o cabeçalho mostra o número, o exercício e a propriedade.</figcaption></figure>
 
 <h3>Encerrar o exercício</h3>
@@ -376,7 +391,7 @@
 <h2 id="proprietarios"><span class="num">6.</span>Lançamentos dos proprietários</h2>
 <p><span class="caminho">Movimentação › Lançamentos dos proprietários</span>. Mostra a <strong>parcela de um proprietário</strong> em cada lançamento, de todas as propriedades em que ele participa, com os totais de receitas, despesas e saldo.</p>
 <p>Escolha o proprietário. Se quiser, filtre por propriedade, exercício, período, documento, série ou valor da parcela. O botão <span class="botao claro">Limpar</span> tira os filtros e mantém o proprietário escolhido.</p>
-<figure><a href="imagens/24-lancamentos-proprietario.png"><img src="imagens/24-lancamentos-proprietario.png" alt="Lançamentos do proprietário Carlos com a participação e a parcela" loading="lazy"></a>
+<figure><img src="imagens/24-lancamentos-proprietario.png" alt="Lançamentos do proprietário Carlos com a participação e a parcela" loading="lazy">
 <figcaption>Parcela do proprietário em cada lançamento.</figcaption></figure>
 
 <!-- ======================================================= -->
@@ -387,7 +402,7 @@
   <li>Confira na lista as contas com saldo e o valor que será lançado.</li>
   <li>Clique em <span class="botao">Gerar zeramento</span>.</li>
 </ol>
-<figure><a href="imagens/25-zeramento.png"><img src="imagens/25-zeramento.png" alt="Tela de zeramento com as contas a zerar e os botões Excluir zeramentos e Gerar zeramento" loading="lazy"></a>
+<figure><img src="imagens/25-zeramento.png" alt="Tela de zeramento com as contas a zerar e os botões Excluir zeramentos e Gerar zeramento" loading="lazy">
 <figcaption>Contas a zerar na Fazenda Santa Luzia, exercício 2026.</figcaption></figure>
 <div class="atencao"><strong>Gere uma vez só</strong>Para refazer, primeiro use <span class="botao claro">Excluir zeramentos</span> e depois gere de novo. Gerar duas vezes duplica os valores. Os relatórios têm a opção <em>Desconsiderar zeramento</em> para ver os valores sem ele.</div>
 
@@ -399,23 +414,23 @@
   <li><strong>Partes iguais entre os sócios ativos:</strong> divide igualmente entre os sócios ativos.</li>
 </ul>
 <p>A tela mostra os sócios, o percentual atual, como fica depois do recálculo e quantos lançamentos serão refeitos. Confira e clique em <span class="botao">Recalcular</span>.</p>
-<figure><a href="imagens/26-recalculo.png"><img src="imagens/26-recalculo.png" alt="Recálculo de saldos com os sócios e os percentuais" loading="lazy"></a>
+<figure><img src="imagens/26-recalculo.png" alt="Recálculo de saldos com os sócios e os percentuais" loading="lazy">
 <figcaption>Recálculo da Fazenda Boa Esperança a partir de 01/01/2026.</figcaption></figure>
 
 <!-- ======================================================= -->
 <h2 id="gado"><span class="num">9.</span>Movimento do gado</h2>
 <a class="ver-video" href="#video-gado">▶ Ver o vídeo desta parte</a>
 <p><span class="caminho">Movimentação › Movimento do gado</span>. Registra entradas, nascimentos, saídas, abates e perdas do rebanho de cada propriedade, por tipo de animal. Filtre por propriedade, animal, período, situação (entrada ou saída) ou documento.</p>
-<figure><a href="imagens/27-gado.png"><img src="imagens/27-gado.png" alt="Lista de movimentos do gado" loading="lazy"></a>
+<figure><img src="imagens/27-gado.png" alt="Lista de movimentos do gado" loading="lazy">
 <figcaption>Movimentos do gado.</figcaption></figure>
 <p>No movimento, o quadro segue o modelo da ficha do rebanho: o <strong>saldo anterior</strong> vem do último movimento, e o sistema calcula a soma das entradas, das saídas e o <strong>saldo</strong>. Informe também o tipo de movimento, o valor, a nota e o emitente e, nas saídas, o código DIPAM. Em transferências, escolha a propriedade de destino.</p>
-<figure><a href="imagens/28-gado-movimento.png"><img src="imagens/28-gado-movimento.png" alt="Janela do movimento do gado com entradas, saídas e saldo" loading="lazy"></a>
+<figure><img src="imagens/28-gado-movimento.png" alt="Janela do movimento do gado com entradas, saídas e saldo" loading="lazy">
 <figcaption>Movimento de venda de 40 bois: saldo de 120 para 80.</figcaption></figure>
 
 <!-- ======================================================= -->
 <h2 id="gado-proprietario"><span class="num">10.</span>Gado por proprietário</h2>
 <p><span class="caminho">Movimentação › Gado por proprietário</span>. Movimento do rebanho de cada proprietário por espécie e período. Filtre por proprietário, espécie e exercício e use <span class="botao">Novo movimento</span> para incluir um período.</p>
-<figure><a href="imagens/29-gado-proprietario.png"><img src="imagens/29-gado-proprietario.png" alt="Gado por proprietário" loading="lazy"></a>
+<figure><img src="imagens/29-gado-proprietario.png" alt="Gado por proprietário" loading="lazy">
 <figcaption>Gado por proprietário.</figcaption></figure>
 
 <!-- ======================================================= -->
@@ -428,9 +443,9 @@
   <li>Clique em <span class="botao">Gerar relatório</span>. Ele aparece logo abaixo.</li>
   <li>Use <span class="botao claro">Imprimir / PDF</span> para imprimir ou salvar em PDF (no navegador, escolha a impressora <em>Salvar como PDF</em>) e <span class="botao claro">Exportar Excel</span> para abrir no Excel.</li>
 </ol>
-<figure><a href="imagens/31-relatorio-filtros.png"><img src="imagens/31-relatorio-filtros.png" alt="Relatório Livro caixa com os filtros de abrangência, propriedade, datas e conta" loading="lazy"></a>
+<figure><img src="imagens/31-relatorio-filtros.png" alt="Relatório Livro caixa com os filtros de abrangência, propriedade, datas e conta" loading="lazy">
 <figcaption>Filtros do Livro caixa.</figcaption></figure>
-<figure><a href="imagens/32-livro-caixa.png"><img src="imagens/32-livro-caixa.png" alt="Livro caixa gerado com saldo anterior, receitas, despesas e saldo" loading="lazy"></a>
+<figure><img src="imagens/32-livro-caixa.png" alt="Livro caixa gerado com saldo anterior, receitas, despesas e saldo" loading="lazy">
 <figcaption>Livro caixa gerado.</figcaption></figure>
 <div class="nota"><strong>Trocar de relatório</strong>A lista de relatórios continua visível depois de gerar. Para ganhar espaço em relatórios largos, clique em <span class="botao claro">Recolher lista</span>; o mesmo botão (<em>Lista de relatórios</em>) mostra a lista de novo. O campo <em>Trocar relatório</em>, à direita, também muda o relatório.</div>
 
@@ -454,11 +469,11 @@
     <tr><td>Gráficos do livro caixa</td><td>Total por conta de receitas, despesas ou ativos no período, em barras ou pizza.</td></tr>
   </tbody>
 </table>
-<figure><a href="imagens/35-apuracao.png"><img src="imagens/35-apuracao.png" alt="Apuração de resultados do proprietário com o resultado e o imposto estimado" loading="lazy"></a>
+<figure><img src="imagens/35-apuracao.png" alt="Apuração de resultados do proprietário com o resultado e o imposto estimado" loading="lazy">
 <figcaption>Apuração de resultados de um proprietário.</figcaption></figure>
-<figure><a href="imagens/33-dre.png"><img src="imagens/33-dre.png" alt="DRE com gráfico de receitas e despesas por mês" loading="lazy"></a>
+<figure><img src="imagens/33-dre.png" alt="DRE com gráfico de receitas e despesas por mês" loading="lazy">
 <figcaption>DRE com o gráfico mensal.</figcaption></figure>
-<figure><a href="imagens/34-graficos.png"><img src="imagens/34-graficos.png" alt="Gráfico de despesas por conta em barras horizontais" loading="lazy"></a>
+<figure><img src="imagens/34-graficos.png" alt="Gráfico de despesas por conta em barras horizontais" loading="lazy">
 <figcaption>Gráficos do livro caixa: despesas por conta.</figcaption></figure>
 
 <!-- ======================================================= -->
@@ -470,7 +485,7 @@
   <li>Escolha a conta das linhas que não foram reconhecidas. Você pode marcar várias linhas e aplicar o mesmo banco ou tipo de documento fiscal de uma vez, e pedir para <em>lembrar as contas escolhidas</em> nas próximas importações.</li>
   <li>Clique em <span class="botao">Gerar lançamentos</span>. Nada é gravado antes deste passo.</li>
 </ol>
-<figure><a href="imagens/40-importar-planilha.png"><img src="imagens/40-importar-planilha.png" alt="Tela de importação de planilha" loading="lazy"></a>
+<figure><img src="imagens/40-importar-planilha.png" alt="Tela de importação de planilha" loading="lazy">
 <figcaption>Importar planilha.</figcaption></figure>
 
 <!-- ======================================================= -->
@@ -482,7 +497,7 @@
   <li>Informe a conta de cada lançamento e clique em <span class="botao">Gerar lançamentos</span>.</li>
   <li>Notas que já foram lançadas são avisadas, para não lançar em dobro.</li>
 </ul>
-<figure><a href="imagens/41-importar-nfe.png"><img src="imagens/41-importar-nfe.png" alt="Tela de importação de XML de NF-e" loading="lazy"></a>
+<figure><img src="imagens/41-importar-nfe.png" alt="Tela de importação de XML de NF-e" loading="lazy">
 <figcaption>Importar XML de NF-e.</figcaption></figure>
 
 <!-- ======================================================= -->
@@ -494,7 +509,7 @@
   <li>Clique em <span class="botao">Gerar prévia</span>. Confira os totais, as contas bancárias e a lista <em>Corrija antes de entregar</em>, se aparecer.</li>
   <li>Clique em <span class="botao claro">Baixar arquivo</span> e importe-o no programa do LCDPR.</li>
 </ol>
-<figure><a href="imagens/42-lcdpr.png"><img src="imagens/42-lcdpr.png" alt="Tela de parâmetros do LCDPR" loading="lazy"></a>
+<figure><img src="imagens/42-lcdpr.png" alt="Tela de parâmetros do LCDPR" loading="lazy">
 <figcaption>Parâmetros do LCDPR.</figcaption></figure>
 <div class="nota"><strong>Antes de gerar</strong>Confira os dados do contador no cadastro da empresa, o CPF e a inscrição do produtor no cliente, o fornecedor e o banco dos lançamentos. São informações exigidas no arquivo.</div>
 
@@ -506,7 +521,7 @@
   <li>Se alguém esquecer a senha ou ficar bloqueado, abra o usuário e clique em <span class="botao claro">Inicializar senha</span>: a senha fica em branco, o bloqueio é retirado e a pessoa cria uma nova ao entrar.</li>
   <li>Para tirar o acesso de quem saiu, marque <em>Ativo = Não</em>. O histórico na auditoria é mantido.</li>
 </ul>
-<figure><a href="imagens/50-usuarios.png"><img src="imagens/50-usuarios.png" alt="Lista de usuários" loading="lazy"></a>
+<figure><img src="imagens/50-usuarios.png" alt="Lista de usuários" loading="lazy">
 <figcaption>Usuários.</figcaption></figure>
 
 <!-- ======================================================= -->
@@ -518,7 +533,7 @@
 </ul>
 <p>Clique em <span class="botao">Salvar permissões</span>. O usuário vê o menu atualizado quando entrar de novo ou recarregar a página.</p>
 <p>As permissões valem <strong>só para a empresa escolhida</strong>. A lista de empresas mostra quantas aplicações o usuário tem em cada uma; com <em>(sem acesso)</em>, ele não consegue entrar naquela empresa.</p>
-<figure><a href="imagens/51-permissoes.png"><img src="imagens/51-permissoes.png" alt="Permissões do usuário ANA.PAULA por aplicação" loading="lazy"></a>
+<figure><img src="imagens/51-permissoes.png" alt="Permissões do usuário ANA.PAULA por aplicação" loading="lazy">
 <figcaption>Permissões de um usuário na empresa escolhida.</figcaption></figure>
 
 <!-- ======================================================= -->
@@ -530,14 +545,14 @@
   <li><strong>Sistema anterior:</strong> o histórico de alterações gravado pelo sistema Rural antigo.</li>
 </ul>
 <p>Filtre por período, cadastro ou movimento, operação, login e código do registro. Tudo é gravado com a <strong>empresa</strong> em que foi feito. O administrador escolhe no campo <em>Empresa</em> a empresa atual, outra empresa ou <strong>Todas as empresas</strong> (nesse caso aparece a coluna EMPRESA); os demais usuários veem só a empresa em que estão.</p>
-<figure><a href="imagens/52-auditoria.png"><img src="imagens/52-auditoria.png" alt="Auditoria com a lista de alterações" loading="lazy"></a>
+<figure><img src="imagens/52-auditoria.png" alt="Auditoria com a lista de alterações" loading="lazy">
 <figcaption>Auditoria de todas as empresas, com a coluna da empresa.</figcaption></figure>
 
 <!-- ======================================================= -->
 <h2 id="licenca"><span class="num">18.</span>Licença de uso</h2>
 <a class="ver-video" href="#video-licenca">▶ Ver o vídeo desta parte</a>
 <p>O WebRural funciona com uma <strong>licença de uso</strong> liberada pelo fornecedor, válida até uma data. Sem licença, vencida ou bloqueada, o sistema mostra uma tela com o motivo no lugar da entrada. <strong>Nenhum dado é perdido</strong>: depois de liberado, tudo volta como estava.</p>
-<figure><a href="imagens/55-licenca-bloqueio.png"><img src="imagens/55-licenca-bloqueio.png" alt="Tela de licença ainda não ativada, com o código da instalação e o formulário de ativação" loading="lazy" style="max-width:640px"></a>
+<figure><img src="imagens/55-licenca-bloqueio.png" alt="Tela de licença ainda não ativada, com o código da instalação e o formulário de ativação" loading="lazy" style="max-width:640px">
 <figcaption>Licença não ativada: o código desta instalação e o campo para o código de licença.</figcaption></figure>
 <h3>Liberar ou renovar</h3>
 <ol class="passos">
@@ -545,15 +560,15 @@
   <li>O fornecedor devolve um <strong>código de licença</strong> (um texto longo). Ele vale só para esta instalação e até a data liberada.</li>
   <li>O usuário <strong>ADMIN</strong> cola o código no campo <em>Código de licença</em>, digita a senha do ADMIN e clica em <span class="botao">Liberar acesso</span>.</li>
 </ol>
-<figure><a href="imagens/54-licenca.png"><img src="imagens/54-licenca.png" alt="Tela Licença de uso com a situação, o código da instalação e o campo para o novo código" loading="lazy"></a>
+<figure><img src="imagens/54-licenca.png" alt="Tela Licença de uso com a situação, o código da instalação e o campo para o novo código" loading="lazy">
 <figcaption>Segurança › Licença de uso (só o usuário ADMIN): situação, data final e renovação.</figcaption></figure>
 <div class="atencao"><strong>Somente o usuário ADMIN</strong>Só o login ADMIN ativa a licença, sempre confirmando a senha. A senha errada conta como tentativa e bloqueia o ADMIN na 5ª. Um código de outra instalação, alterado ou mais antigo que o atual é recusado.</div>
 <p>Faltando 30 dias para o fim do período, o administrador vê um aviso no topo das telas. Se a sua instalação consulta a central do fornecedor pela internet, renovações e bloqueios valem sozinhos; o botão <span class="botao claro">Verificar novamente</span> confere na hora.</p>
 <details class="fornecedor"><summary>Para o fornecedor: central de licenças</summary>
 <p>Na central de licenças, entre com o usuário <strong>ADMIN</strong> e a sua senha. Em cada cliente, <span class="botao">Gerar código</span> pede o código da instalação e devolve o código de licença, com o botão <em>Copiar código</em>. Para estender a data, use <em>Renovar</em> antes de gerar o código. O histórico registra cada código gerado. Detalhes de instalação no guia <code>Licencas/README.md</code>.</p>
-<figure><a href="imagens/61-central-clientes.png"><img src="imagens/61-central-clientes.png" alt="Painel da central de licenças com a lista de clientes" loading="lazy"></a>
+<figure><img src="imagens/61-central-clientes.png" alt="Painel da central de licenças com a lista de clientes" loading="lazy">
 <figcaption>Central de licenças: clientes, situação, data liberada e ações.</figcaption></figure>
-<figure><a href="imagens/62-central-gerar-codigo.png"><img src="imagens/62-central-gerar-codigo.png" alt="Janela Código de licença com o campo Código da instalação" loading="lazy" style="max-width:560px"></a>
+<figure><img src="imagens/62-central-gerar-codigo.png" alt="Janela Código de licença com o campo Código da instalação" loading="lazy" style="max-width:560px">
 <figcaption>Gerar o código de licença para o código da instalação do cliente.</figcaption></figure>
 </details>
 
