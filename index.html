@@ -155,7 +155,7 @@
 <div class="videos">
   <figure id="video-visao-geral">
     <video controls controlslist="nodownload noremoteplayback noplaybackrate" disablepictureinpicture disableremoteplayback preload="none" poster="imagens/02-inicio.png" src="videos/01-visao-geral.webm" aria-label="Vídeo: Visão geral"></video>
-    <figcaption><strong>Visão geral · 57 s</strong>Entrar no sistema (com a empresa já marcada), o painel inicial e o menu.</figcaption>
+    <figcaption><strong>Visão geral · 59 s</strong>Entrar no sistema (com a empresa já marcada), o painel inicial com os filtros e o menu.</figcaption>
   </figure>
   <figure id="video-cadastros">
     <video controls controlslist="nodownload noremoteplayback noplaybackrate" disablepictureinpicture disableremoteplayback preload="none" poster="imagens/10-clientes-lista.png" src="videos/02-cadastros.webm" aria-label="Vídeo: Cadastros"></video>
@@ -237,15 +237,20 @@
 <div class="nota"><strong>Se o indicador ficar vermelho</strong>“API indisponível” ou “Serviços com falha” indica que o servidor não respondeu. Clique no botão de atualizar (as duas setas) e, se continuar, avise o administrador. Nada é gravado enquanto o sistema estiver fora.</div>
 
 <h3 id="painel">Painel</h3>
-<p><span class="caminho">Início › Painel</span>. É a primeira tela depois de entrar (para quem tem acesso ao Caixa). Mostra a empresa em que você está, no exercício escolhido no canto superior direito:</p>
+<p><span class="caminho">Início › Painel</span>. É a primeira tela depois de entrar (para quem tem acesso ao Caixa). Mostra a empresa em que você está, no exercício escolhido no campo <em>Exercício</em>. Os campos <em>Propriedade</em> e <em>Proprietário</em> filtram o painel:</p>
 <ul>
-  <li><strong>Números do ano:</strong> receitas, despesas, saldo e quantidade de lançamentos, com a comparação com o ano anterior.</li>
-  <li><strong>Receitas × despesas por mês:</strong> passe o mouse sobre um mês para ver os valores; <em>Ver tabela</em> mostra os mesmos números em tabela.</li>
-  <li><strong>Pendências:</strong> propriedade sem exercício aberto no ano, exercício do ano anterior não encerrado ou sem zeramento e sócios cuja participação não soma 100%.</li>
-  <li><strong>Propriedades:</strong> situação do exercício, lançamentos, receitas, despesas, saldo e sócios de cada propriedade.</li>
+  <li><strong>Propriedade:</strong> só os números, os lançamentos e as pendências daquela propriedade.</li>
+  <li><strong>Proprietário:</strong> a <strong>parte dele</strong> em cada lançamento (pelo rateio do percentual de participação), só nas propriedades em que ele é sócio. Dá para usar os dois juntos.</li>
 </ul>
-<p>Clique numa propriedade (na tabela ou nas pendências) para abrir o <a href="#caixa">Caixa rural</a> já nela. Os valores do painel não incluem os lançamentos de zeramento.</p>
-<figure><img src="imagens/05-painel.png" alt="Painel com receitas, despesas, saldo, gráfico mensal, pendências e propriedades" loading="lazy"></figure>
+<p>Sem filtro, o painel mostra:</p>
+<ul>
+  <li><strong>Números do ano:</strong> receitas, despesas, resultado (receitas − despesas) e quantidade de lançamentos, somando todas as propriedades da empresa. No ano corrente, a comparação é com o <strong>mesmo período</strong> do ano anterior (até o mesmo dia); nos outros anos, com o ano anterior inteiro.</li>
+  <li><strong>Lançamentos por propriedade:</strong> as propriedades com mais lançamentos no ano, em barras. Passe o mouse sobre uma barra para ver receitas, despesas e resultado; as demais aparecem resumidas abaixo do gráfico.</li>
+  <li><strong>Pendências:</strong> propriedade sem exercício aberto no ano, exercício do ano anterior não encerrado ou sem zeramento e sócios cuja participação não soma 100%.</li>
+  <li><strong>Propriedades com lançamentos:</strong> situação do exercício, lançamentos, receitas, despesas, saldo e sócios de cada propriedade que teve movimento no ano.</li>
+</ul>
+<p>Clique numa propriedade (no gráfico, na tabela ou nas pendências) para abrir o <a href="#caixa">Caixa rural</a> já nela. Os valores do painel não incluem os lançamentos de zeramento.</p>
+<figure><img src="imagens/05-painel.png" alt="Painel com receitas, despesas, resultado, lançamentos por propriedade, pendências e propriedades" loading="lazy"></figure>
 
 <!-- ======================================================= -->
 <h2 id="padroes"><span class="num">3.</span>Como as telas funcionam</h2>
