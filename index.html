@@ -106,6 +106,7 @@
   <a href="#acesso">1. Acesso ao sistema</a>
   <a class="sub" href="#empresas">Escolher e trocar a empresa</a>
   <a href="#tela">2. Conhecendo a tela</a>
+  <a class="sub" href="#painel">Painel</a>
   <a href="#padroes">3. Como as telas funcionam</a>
   <p>Cadastros</p>
   <a href="#cadastros">4. Cadastros</a>
@@ -154,7 +155,7 @@
 <div class="videos">
   <figure id="video-visao-geral">
     <video controls controlslist="nodownload noremoteplayback noplaybackrate" disablepictureinpicture disableremoteplayback preload="none" poster="imagens/02-inicio.png" src="videos/01-visao-geral.webm" aria-label="Vídeo: Visão geral"></video>
-    <figcaption><strong>Visão geral · 49 s</strong>Entrar no sistema (com a empresa já marcada) e conhecer o menu.</figcaption>
+    <figcaption><strong>Visão geral · 57 s</strong>Entrar no sistema (com a empresa já marcada), o painel inicial e o menu.</figcaption>
   </figure>
   <figure id="video-cadastros">
     <video controls controlslist="nodownload noremoteplayback noplaybackrate" disablepictureinpicture disableremoteplayback preload="none" poster="imagens/10-clientes-lista.png" src="videos/02-cadastros.webm" aria-label="Vídeo: Cadastros"></video>
@@ -220,7 +221,7 @@
 <!-- ======================================================= -->
 <h2 id="tela"><span class="num">2.</span>Conhecendo a tela</h2>
 <a class="ver-video" href="#video-visao-geral">▶ Ver o vídeo desta parte</a>
-<p>Depois de entrar, o sistema abre no <strong>Caixa rural</strong>. A tela tem três partes:</p>
+<p>Depois de entrar, o sistema abre no <strong>Painel</strong> (veja abaixo). A tela tem três partes:</p>
 <figure><img src="imagens/02-inicio.png" alt="Tela principal com o menu verde à esquerda, a barra superior e o Caixa rural" loading="lazy">
 <figcaption>Tela principal: menu à esquerda, barra superior e a área de trabalho.</figcaption></figure>
 <ul>
@@ -234,6 +235,17 @@
 <figcaption>Menu lateral com os cadastros abertos.</figcaption></figure>
 <div class="nota"><strong>Avisos para o administrador</strong>Uma faixa amarela no topo das telas avisa o administrador quando a licença de uso está perto de vencer ou quando o backup do banco está atrasado. Nesses casos, fale com o responsável pelo servidor ou pelo sistema.</div>
 <div class="nota"><strong>Se o indicador ficar vermelho</strong>“API indisponível” ou “Serviços com falha” indica que o servidor não respondeu. Clique no botão de atualizar (as duas setas) e, se continuar, avise o administrador. Nada é gravado enquanto o sistema estiver fora.</div>
+
+<h3 id="painel">Painel</h3>
+<p><span class="caminho">Início › Painel</span>. É a primeira tela depois de entrar (para quem tem acesso ao Caixa). Mostra a empresa em que você está, no exercício escolhido no canto superior direito:</p>
+<ul>
+  <li><strong>Números do ano:</strong> receitas, despesas, saldo e quantidade de lançamentos, com a comparação com o ano anterior.</li>
+  <li><strong>Receitas × despesas por mês:</strong> passe o mouse sobre um mês para ver os valores; <em>Ver tabela</em> mostra os mesmos números em tabela.</li>
+  <li><strong>Pendências:</strong> propriedade sem exercício aberto no ano, exercício do ano anterior não encerrado ou sem zeramento e sócios cuja participação não soma 100%.</li>
+  <li><strong>Propriedades:</strong> situação do exercício, lançamentos, receitas, despesas, saldo e sócios de cada propriedade.</li>
+</ul>
+<p>Clique numa propriedade (na tabela ou nas pendências) para abrir o <a href="#caixa">Caixa rural</a> já nela. Os valores do painel não incluem os lançamentos de zeramento.</p>
+<figure><img src="imagens/05-painel.png" alt="Painel com receitas, despesas, saldo, gráfico mensal, pendências e propriedades" loading="lazy"></figure>
 
 <!-- ======================================================= -->
 <h2 id="padroes"><span class="num">3.</span>Como as telas funcionam</h2>
